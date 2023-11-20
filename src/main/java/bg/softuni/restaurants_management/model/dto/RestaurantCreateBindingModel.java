@@ -33,7 +33,7 @@ public class RestaurantCreateBindingModel {
         return name;
     }
 
-    public Restaurant mapToEntity() {
+    public Restaurant mapToEntity(String url) {
         Restaurant restaurant = new Restaurant();
 
 
@@ -46,6 +46,7 @@ public class RestaurantCreateBindingModel {
         }
 
         restaurant.setName(this.name);
+        restaurant.setImgUrl(url);
 
         return restaurant;
     }

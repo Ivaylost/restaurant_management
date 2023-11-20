@@ -41,8 +41,7 @@ public class RestaurantController {
             return new ModelAndView("restaurant-create");
         }
 
-        Restaurant restaurant = restaurantCreateBindingModel.mapToEntity();
-        restaurant.setImgUrl(imageUrl);
+        Restaurant restaurant = restaurantCreateBindingModel.mapToEntity(imageUrl);
 
         boolean hasSuccessfulRegistration = restaurantService.createRestaurant(restaurant) != null;
 
