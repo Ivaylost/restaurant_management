@@ -18,8 +18,6 @@ public class RestaurantCreateBindingModel {
     @NotEmpty
     private String lat;
 
-    private String imgUrl;
-
     private MultipartFile file;
 
     public MultipartFile getFile() {
@@ -48,7 +46,6 @@ public class RestaurantCreateBindingModel {
         }
 
         restaurant.setName(this.name);
-        restaurant.setImgUrl(this.imgUrl);
 
         return restaurant;
     }
@@ -81,15 +78,6 @@ public class RestaurantCreateBindingModel {
 
     public RestaurantCreateBindingModel setLat(String lat) {
         this.lat = lat;
-        return this;
-    }
-
-    public String getImgUrl() {
-        return imgUrl;
-    }
-
-    public RestaurantCreateBindingModel setImgUrl(String imgUrl) {
-        this.imgUrl = imgUrl;
         return this;
     }
 }

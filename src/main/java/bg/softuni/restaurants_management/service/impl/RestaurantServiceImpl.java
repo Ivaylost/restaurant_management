@@ -1,27 +1,21 @@
 package bg.softuni.restaurants_management.service.impl;
 
-import bg.softuni.restaurants_management.model.dto.RestaurantCreateBindingModel;
-import bg.softuni.restaurants_management.model.dto.UploadImgDto;
+import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.repository.RestaurantRepository;
 import bg.softuni.restaurants_management.service.RestaurantService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class RestaurantServiceImpl implements RestaurantService {
-    private final RestaurantRepository repository;
+    private final RestaurantRepository restaurantRepository;
 
-    public RestaurantServiceImpl(RestaurantRepository repository) {
-        this.repository = repository;
+    public RestaurantServiceImpl(RestaurantRepository restaurantRepository) {
+        this.restaurantRepository = restaurantRepository;
     }
 
-    @Override
-    public boolean createRestaurant(RestaurantCreateBindingModel restaurantCreateBindingModel) {
-        return false;
-    }
 
     @Override
-    public void saveImage(MultipartFile imageFile, UploadImgDto imgDto) {
-
+    public Restaurant createRestaurant(Restaurant restaurant) {
+        return restaurantRepository.save(restaurant);
     }
 }

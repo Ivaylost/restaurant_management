@@ -35,15 +35,16 @@ public class RestaurantController {
     public ModelAndView register(@ModelAttribute("restaurantCreateBindingModel") @Valid RestaurantCreateBindingModel restaurantCreateBindingModel,
                                  BindingResult bindingResult) {
 
-        boolean success = imageService.save(restaurantCreateBindingModel);
+        String imageUrl = imageService.save(restaurantCreateBindingModel);
 
-        Restaurant restaurant = restaurantCreateBindingModel.mapToEntity();
-
-        if (bindingResult.hasErrors()) {
+        if (bindingResult.hasErrors() || imageUrl == null) {
             return new ModelAndView("restaurant-create");
         }
 
-        boolean hasSuccessfulRegistration = restaurantService.createRestaurant(restaurantCreateBindingModel);
+        Restaurant restaurant = restaurantCreateBindingModel.mapToEntity();
+        restaurant.setImgUrl(imageUrl);
+
+        boolean hasSuccessfulRegistration = restaurantService.createRestaurant(restaurant) != null;
 
         if (!hasSuccessfulRegistration) {
             ModelAndView modelAndView = new ModelAndView("restaurant-create");
@@ -51,33 +52,6 @@ public class RestaurantController {
             return modelAndView;
         }
 
-        return new ModelAndView("redirect:/create");
-    }
-
-    @PostMapping("/saveImg")
-    public ModelAndView saveSpecimen(@RequestParam("imageFile") MultipartFile imageFile) {
-        ModelAndView modelAndView = new ModelAndView();
-//        try {
-//            restaurantService.save(specimenDTO);
-//        } catch (Exception e) {
-//            System.out.println();
-//            return modelAndView;
-//        }
-
-
-        UploadImgDto imgDto = new UploadImgDto();
-        imgDto.setFileName(imageFile.getOriginalFilename());
-        imgDto.setPath("/img/");
-        try {
-            restaurantService.saveImage(imageFile, imgDto);
-        } catch (Exception e) {
-            System.out.println("------------------" + e);
-            return modelAndView;
-        }
-//
-//        modelAndView.addObject("photoDTO", photoDTO);
-//        modelAndView.addObject("specimenDTO", specimenDTO);
-        return modelAndView;
-
+        return new ModelAndView("redirect:/");
     }
 }

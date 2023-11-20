@@ -13,7 +13,7 @@ import java.io.OutputStream;
 @Service
 public class ImageServiceImpl implements ImageService {
     @Override
-    public boolean save(RestaurantCreateBindingModel restaurantCreateBindingModel) {
+    public String save(RestaurantCreateBindingModel restaurantCreateBindingModel) {
 
         MultipartFile image = restaurantCreateBindingModel.getFile();
 
@@ -30,8 +30,9 @@ public class ImageServiceImpl implements ImageService {
             outputStream.close();
         } catch (IOException e) {
             System.out.println(e.getStackTrace());
+            return null;
         }
 
-        return false;
+        return imagePath;
     }
 }
