@@ -1,6 +1,6 @@
 package bg.softuni.restaurants_management.web;
 
-import bg.softuni.restaurants_management.model.dto.UserRegistrationDTO;
+import bg.softuni.restaurants_management.model.dto.UserRegistrationBindingModel;
 import bg.softuni.restaurants_management.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -23,13 +23,13 @@ public class UserRegistrationController {
 
     @GetMapping("/register")
     public ModelAndView register(
-            @ModelAttribute("userRegistrationDTO") UserRegistrationDTO userRegistrationDTO
+            @ModelAttribute("userRegistrationBindingModel") UserRegistrationBindingModel userRegistrationBindingModel
     ){
         return new ModelAndView("auth-register");
     }
 
     @PostMapping("/register")
-    public ModelAndView register(@ModelAttribute("userRegistrationDTO") @Valid UserRegistrationDTO userRegistrationDTO,
+    public ModelAndView register(@ModelAttribute("userRegistrationBindingModel") @Valid UserRegistrationBindingModel userRegistrationBindingModel,
                            BindingResult bindingResult) {
 
 
@@ -38,7 +38,7 @@ public class UserRegistrationController {
             return new ModelAndView("auth-register");
         }
 
-        boolean hasSuccessfulRegistration = userService.registerUser(userRegistrationDTO);
+        boolean hasSuccessfulRegistration = userService.registerUser(userRegistrationBindingModel);
 
         if (!hasSuccessfulRegistration) {
             ModelAndView modelAndView = new ModelAndView("auth-register");

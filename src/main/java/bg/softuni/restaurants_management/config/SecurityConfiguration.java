@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.config;
 
+import bg.softuni.restaurants_management.model.enums.RoleEnums;
 import bg.softuni.restaurants_management.repository.UserRepository;
 import bg.softuni.restaurants_management.service.impl.RestaurantsManagementUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,12 +28,12 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.authorizeHttpRequests(
-                authorizeRequests -> authorizeRequests
+               authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/css/**", "/img/**", "/js/**").permitAll()
+                        .requestMatchers("/css/**", "/img/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
-
-                        .anyRequest().authenticated()
+//                        .requestMatchers("/restaurants/create", "/restaurants").hasRole(RoleEnums.ADMIN.name())
+                        .anyRequest().permitAll()
         ).formLogin(
                 formLogin -> {
                     formLogin

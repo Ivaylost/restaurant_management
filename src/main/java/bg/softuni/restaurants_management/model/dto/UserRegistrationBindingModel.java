@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotNull;
         second = "confirmPassword",
         message = "Passwords should match."
 )
-public class UserRegistrationDTO {
+public class UserRegistrationBindingModel {
     @NotEmpty
     private String firstName;
     @NotEmpty
@@ -27,7 +27,7 @@ public class UserRegistrationDTO {
         return firstName;
     }
 
-    public UserRegistrationDTO setFirstName(String firstName) {
+    public UserRegistrationBindingModel setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -36,7 +36,7 @@ public class UserRegistrationDTO {
         return lastName;
     }
 
-    public UserRegistrationDTO setLastName(String lastName) {
+    public UserRegistrationBindingModel setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -45,7 +45,7 @@ public class UserRegistrationDTO {
         return email;
     }
 
-    public UserRegistrationDTO setEmail(String email) {
+    public UserRegistrationBindingModel setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -54,7 +54,7 @@ public class UserRegistrationDTO {
         return password;
     }
 
-    public UserRegistrationDTO setPassword(String password) {
+    public UserRegistrationBindingModel setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -63,7 +63,7 @@ public class UserRegistrationDTO {
         return confirmPassword;
     }
 
-    public UserRegistrationDTO setConfirmPassword(String confirmPassword) {
+    public UserRegistrationBindingModel setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
         return this;
     }

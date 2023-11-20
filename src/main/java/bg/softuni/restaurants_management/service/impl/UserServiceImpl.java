@@ -1,6 +1,6 @@
 package bg.softuni.restaurants_management.service.impl;
 
-import bg.softuni.restaurants_management.model.dto.UserRegistrationDTO;
+import bg.softuni.restaurants_management.model.dto.UserRegistrationBindingModel;
 import bg.softuni.restaurants_management.model.entity.Role;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
 import bg.softuni.restaurants_management.model.enums.RoleEnums;
@@ -32,20 +32,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean registerUser(UserRegistrationDTO userRegistrationDTO) {
-        userRepository.save(map(userRegistrationDTO));
+    public boolean registerUser(UserRegistrationBindingModel userRegistrationBindingModel) {
+        userRepository.save(map(userRegistrationBindingModel));
         return true;
     }
 
-    private UserEntity map(UserRegistrationDTO userRegistrationDTO) {
+    private UserEntity map(UserRegistrationBindingModel userRegistrationBindingModel) {
 
-        List<Role> userRole = List.of(roleRepository.findByRole(RoleEnums.ROLE_USER));
+        List<Role> userRole = List.of(roleRepository.findByRole(RoleEnums.USER));
 
         return new UserEntity()
-                .setFirstName(userRegistrationDTO.getFirstName())
-                .setLastName(userRegistrationDTO.getLastName())
+                .setFirstName(userRegistrationBindingModel.getFirstName())
+                .setLastName(userRegistrationBindingModel.getLastName())
                 .setRoles(userRole)
-                .setEmail(userRegistrationDTO.getEmail())
-                .setPassword(passwordEncoder.encode(userRegistrationDTO.getPassword()));
+                .setEmail(userRegistrationBindingModel.getEmail())
+                .setPassword(passwordEncoder.encode(userRegistrationBindingModel.getPassword()));
     }
 }

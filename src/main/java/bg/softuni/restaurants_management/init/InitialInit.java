@@ -45,7 +45,7 @@ public class InitialInit implements CommandLineRunner {
         }
 
         if (userRepository.findByEmail("admin@example.com").isEmpty()) {
-            List<Role> adminRoles = List.of(roleRepository.findByRole(RoleEnums.ROLE_ADMIN));
+            List<Role> adminRoles = List.of(roleRepository.findByRole(RoleEnums.ADMIN));
             UserEntity admin = new UserEntity();
             admin.setEmail("admin@example.com");
             admin.setFirstName("Admin");

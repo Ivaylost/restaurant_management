@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/head}"></head>
+
+
+<body>
+
+<div>
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+<div class="container">
+    <h2 class="text-center text-dark">Create restaurant</h2>
+    <form th:method="post"
+          th:action="@{/restaurants/create}"
+          th:object="${restaurantCreateBindingModel}"
+          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center"
+          enctype="multipart/form-data">
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="name" class="text-white font-weight-bold">Name</label>
+                <div th:if="${hasRegistrationError}" class="text-danger">Creation Error occurred</div>
+                <input type="text" class="form-control" id="name"
+                       th:field="*{name}"
+                       th:errorclass="bg-danger"/>
+                <small th:if="${#fields.hasErrors('name')}"
+                       th:errors="*{name}" class="text-danger">Name error message</small>
+            </div>
+            <div class="form-group col-md-6 mb-3">
+                <label for="lon" class="text-white font-weight-bold">Lon</label>
+                <div th:if="${hasRegistrationError}" class="text-danger">Lon Error occurred</div>
+                <input class="form-control" id="lon"
+                       th:field="*{lon}"
+                       type="text"
+                       th:errorclass="bg-danger"/>
+                <small th:if="${#fields.hasErrors('lon')}"
+                       th:errors="*{lon}" class="text-danger">Lon error message</small>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6 mb-3">
+                <label for="lat" class="text-white font-weight-bold">Lat</label>
+                <div th:if="${hasRegistrationError}" class="text-danger">Lat Error occurred</div>
+                <input type="text" class="form-control" id="lat"
+                       th:field="*{lat}"
+                       th:errorclass="bg-danger"/>
+                <small th:if="${#fields.hasErrors('lat')}"
+                       th:errors="*{lat}" class="text-danger">Lat error message</small>
+            </div>
+        </div>
+        <div class="row">
+            <input id="imgUrl" type="hidden" class="form-control" aria-label="Sizing example input"  name="imgUrl" th:field="*{file}">
+
+            <input type="file" name="file">
+            <input type="submit" value="Upload"/>
+        </div>
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input type="submit" class="btn btn-dark btn-lg" value="Submit"/>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+
+<div>
+    <footer> </footer>
+</div>
+
+</body>
+</html>
