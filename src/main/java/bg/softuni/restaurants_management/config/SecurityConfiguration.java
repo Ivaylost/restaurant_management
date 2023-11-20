@@ -32,6 +32,7 @@ public class SecurityConfiguration {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/css/**", "/img/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
+                        .requestMatchers("/restaurants/details/{id}").permitAll()
 //                        .requestMatchers("/restaurants/create", "/restaurants").hasRole(RoleEnums.ADMIN.name())
                         .anyRequest().permitAll()
         ).formLogin(
