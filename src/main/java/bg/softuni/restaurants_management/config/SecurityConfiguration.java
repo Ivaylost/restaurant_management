@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.config;
 
+import bg.softuni.restaurants_management.model.enums.RoleEnums;
 import bg.softuni.restaurants_management.repository.UserRepository;
 import bg.softuni.restaurants_management.service.impl.RestaurantsManagementUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,12 +25,12 @@ public class SecurityConfiguration {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity.authorizeHttpRequests(
-               authorizeRequests -> authorizeRequests
+                authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/css/**", "/img/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
-                        .requestMatchers("/restaurants/details/{id}").permitAll()
-//                        .requestMatchers("/restaurants/create", "/restaurants").hasRole(RoleEnums.ADMIN.name())
+//                        .requestMatchers("/restaurants/details/{id}").permitAll()
+                        .requestMatchers("/restaurants/create", "/restaurants/details/{id}").hasRole(RoleEnums.ADMIN.name())
                         .anyRequest().permitAll()
         ).formLogin(
                 formLogin -> {
@@ -58,7 +59,7 @@ public class SecurityConfiguration {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository){
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
         return new RestaurantsManagementUserDetailsService(userRepository);
     }
 }

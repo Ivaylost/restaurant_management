@@ -36,6 +36,6 @@ public class RestaurantsManagementUserDetailsService implements UserDetailsServi
     }
 
     private static GrantedAuthority map(Role role){
-        return new SimpleGrantedAuthority(role.getRole().name());
+        return new SimpleGrantedAuthority("ROLE_"+role.getRole().name());
     }
 }
