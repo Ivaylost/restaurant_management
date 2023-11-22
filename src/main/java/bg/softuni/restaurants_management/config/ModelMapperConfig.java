@@ -26,7 +26,7 @@ public class ModelMapperConfig {
 
     @Bean
     public ModelMapper modelMapper() {
-        ModelMapper modelMapper = new ModelMapper();
+        final ModelMapper modelMapper = new ModelMapper();
 
         Provider<UserEntity> newUserProvider = req -> new UserEntity()
                 .setRoles(List.of(roleRepository.findByRole(RoleEnums.USER)));

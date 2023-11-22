@@ -46,6 +46,6 @@ public class UserRegistrationController {
             return modelAndView;
         }
 
-        return new ModelAndView("redirect:/login");
+        return new ModelAndView("redirect:/users/login");
     }
 }
