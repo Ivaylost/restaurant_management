@@ -48,11 +48,4 @@ public class RestaurantViewDetails {
         this.imgUrl = imgUrl;
         return this;
     }
-
-    public RestaurantViewDetails(Restaurant restaurant) {
-        this.name = restaurant.getName();
-        this.lon = restaurant.getLon().toString();
-        this.lat = restaurant.getLat().toString();
-        this.imgUrl = restaurant.getImgUrl();
-    }
 }

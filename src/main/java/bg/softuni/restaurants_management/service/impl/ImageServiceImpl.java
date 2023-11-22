@@ -13,7 +13,7 @@ import java.io.OutputStream;
 @Service
 public class ImageServiceImpl implements ImageService {
     @Override
-    public String save(RestaurantCreateBindingModel restaurantCreateBindingModel) {
+    public String saveImageIntoFileSystem(RestaurantCreateBindingModel restaurantCreateBindingModel) {
 
         MultipartFile image = restaurantCreateBindingModel.getFile();
 

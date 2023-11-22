@@ -1,18 +1,14 @@
 package bg.softuni.restaurants_management.config;
 
-import bg.softuni.restaurants_management.model.enums.RoleEnums;
 import bg.softuni.restaurants_management.repository.UserRepository;
 import bg.softuni.restaurants_management.service.impl.RestaurantsManagementUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.security.StaticResourceLocation;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -59,11 +55,6 @@ public class SecurityConfiguration {
                             .rememberMeCookieName("rememberme");
                 }
         ).build();
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return Pbkdf2PasswordEncoder.defaultsForSpringSecurity_v5_8();
     }
 
     @Bean

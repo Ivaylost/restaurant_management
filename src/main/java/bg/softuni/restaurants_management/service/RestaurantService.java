@@ -9,6 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 public interface RestaurantService {
     Restaurant createRestaurant(Restaurant restaurant);
 
-    RestaurantViewDetails getRestaurantById(Long id);
+    RestaurantViewDetails getRestaurantViewDetailsByRestaurantId(Long id);
 }
 

@@ -33,32 +33,6 @@ public class RestaurantCreateBindingModel {
         return name;
     }
 
-    public Restaurant mapToEntity(String url) {
-        Restaurant restaurant = new Restaurant();
-
-
-        BigDecimal lonAsDecimal = parseToBigDecimal(this.lon);
-        BigDecimal latAsDecimal = parseToBigDecimal(this.lat);
-
-        if (lonAsDecimal != null && latAsDecimal != null){
-            restaurant.setLon(lonAsDecimal);
-            restaurant.setLat(latAsDecimal);
-        }
-
-        restaurant.setName(this.name);
-        restaurant.setImgUrl(url);
-
-        return restaurant;
-    }
-
-    private static BigDecimal parseToBigDecimal(String value){
-        try {
-            return new BigDecimal(value);
-        } catch (NumberFormatException e){
-            return null;
-        }
-    }
-
     public RestaurantCreateBindingModel setName(String name) {
         this.name = name;
         return this;
