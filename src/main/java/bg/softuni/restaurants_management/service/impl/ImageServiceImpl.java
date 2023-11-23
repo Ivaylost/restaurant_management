@@ -17,11 +17,14 @@ public class ImageServiceImpl implements ImageService {
 
         MultipartFile image = restaurantCreateBindingModel.getFile();
 
-        String imagePath = "src\\main\\resources\\static\\images\\" + restaurantCreateBindingModel.getName()
+        String pathToSaveImage = "src\\main\\resources\\static\\images\\" + restaurantCreateBindingModel.getName()
         +"\\primaryImage.jpg";
 
+        String imagePath = "\\images\\" + restaurantCreateBindingModel.getName()
+                +"\\primaryImage.jpg";
+
         try {
-            File file = new File(imagePath);
+            File file = new File(pathToSaveImage);
             boolean mkdirs = file.getParentFile().mkdirs();
             boolean newFile = file.createNewFile();
 

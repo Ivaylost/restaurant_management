@@ -53,7 +53,7 @@ public class RestaurantController {
             return modelAndView;
         }
         String redirectUrl = "redirect:/restaurants/details/" + restaurant.getId();
-        return new ModelAndView(redirectUrl);
+        return new ModelAndView("redirect:/");
     }
 
     @GetMapping("/details/{id}")
