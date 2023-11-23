@@ -41,15 +41,15 @@ body {
 /*     text-align: center;*/
 /*}*/
 
-.brand-section {
-     background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));
-}
+/*.brand-section {*/
+/*     background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));*/
+/*}*/
 
 td, th {
      padding: 3px 8px;
 }
 
-.card.offer, .offer-details .list-group-item {
+ .list-group-item {
      background-image: linear-gradient(to bottom right, rgba(220, 220, 220, 0.9), rgba(255, 255, 255, 0.9));
 }
 .card-img-top-wrapper {
@@ -72,15 +72,13 @@ form.main-form {
 }
 
 #map {
-     padding: 10px;
      height: 200px;
-     width: 50%;
      border-radius: 10px;
 }
 
 #picture-details{
-
-     border-radius: 50%;
+     border-radius: 10px;
+     width: 300px;
 }
 
 .details-main {
