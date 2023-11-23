@@ -12,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/restaurants")
 public class RestaurantController {
@@ -57,10 +59,18 @@ public class RestaurantController {
     }
 
     @GetMapping("/details/{id}")
-    public ModelAndView details(@PathVariable("id") Long id) {
+    public ModelAndView restaurantDetails(@PathVariable("id") Long id) {
         RestaurantViewDetails restaurantViewDetails = restaurantService.getRestaurantViewDetailsByRestaurantId(id);
         ModelAndView view = new ModelAndView("restaurant_details");
         view.addObject("restaurantViewDetails", restaurantViewDetails);
+        return view;
+    }
+
+    @GetMapping("all")
+    public ModelAndView allRestaurants(){
+        List<RestaurantViewDetails> restaurants = restaurantService.getAllRestaurants();
+        ModelAndView view = new ModelAndView("restaurants");
+        view.addObject("restaurants", restaurants);
         return view;
     }
 }

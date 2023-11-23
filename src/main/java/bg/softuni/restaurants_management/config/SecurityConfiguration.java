@@ -29,8 +29,8 @@ public class SecurityConfiguration {
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/css/**", "/img/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
-//                       .requestMatchers("/restaurants/details/{id}").permitAll()
-                        .requestMatchers("/restaurants/create", "/restaurants/details/{id}").hasRole(RoleEnums.ADMIN.name())
+//                       .requestMatchers("/restaurants/restaurantDetails/{id}", "/restaurants/allRestaurants").permitAll()
+                        .requestMatchers("/restaurants/create", "/restaurants/restaurantDetails/{id}", "/restaurants/all").hasRole(RoleEnums.ADMIN.name())
                         .anyRequest().permitAll()
         ).formLogin(
                 formLogin -> {

@@ -7,6 +7,7 @@ import bg.softuni.restaurants_management.service.RestaurantService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,5 +30,16 @@ public class RestaurantServiceImpl implements RestaurantService {
     public RestaurantViewDetails getRestaurantViewDetailsByRestaurantId(Long id) {
         Optional<Restaurant> restaurant = restaurantRepository.findById(id);
         return modelMapper.map(restaurant, RestaurantViewDetails.class);
+    }
+
+    @Override
+    public List<RestaurantViewDetails> getAllRestaurants() {
+
+        return restaurantRepository.findAllBy()
+                .stream()
+                .map(restaurant ->
+                        modelMapper.map(restaurant, RestaurantViewDetails.class)
+                )
+                .toList();
     }
 }

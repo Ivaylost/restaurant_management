@@ -13,10 +13,10 @@ public class Restaurant extends BaseEntity{
     private String name;
 
     @Column(nullable = false)
-    private BigDecimal lon;
+    private Double lon;
 
     @Column(nullable = false)
-    private BigDecimal lat;
+    private Double lat;
 
     @Column(nullable = false)
     private String imgUrl;
@@ -32,20 +32,20 @@ public class Restaurant extends BaseEntity{
         return this;
     }
 
-    public BigDecimal getLon() {
+    public Double getLon() {
         return lon;
     }
 
-    public Restaurant setLon(BigDecimal lon) {
+    public Restaurant setLon(Double lon) {
         this.lon = lon;
         return this;
     }
 
-    public BigDecimal getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public Restaurant setLat(BigDecimal lat) {
+    public Restaurant setLat(Double lat) {
         this.lat = lat;
         return this;
     }
