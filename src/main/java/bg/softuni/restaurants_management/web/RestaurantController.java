@@ -15,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.List;
 
 @Controller
-@RequestMapping("/restaurants")
+@RequestMapping("/admin/restaurants")
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
@@ -54,7 +54,6 @@ public class RestaurantController {
             modelAndView.addObject("hasRegistrationError", true);
             return modelAndView;
         }
-        String redirectUrl = "redirect:/restaurants/details/" + restaurant.getId();
         return new ModelAndView("redirect:/");
     }
 

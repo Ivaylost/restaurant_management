@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 public class RestaurantViewDetails {
+    private Long id;
     private String name;
 
     private String lon;
@@ -19,6 +20,15 @@ public class RestaurantViewDetails {
 
     public RestaurantViewDetails setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public RestaurantViewDetails setId(Long id) {
+        this.id = id;
         return this;
     }
 
