@@ -18,7 +18,7 @@ public class Restaurant extends BaseEntity{
     @Column(nullable = false)
     private Double lat;
 
-    @Column(nullable = false)
+    @Column()
     private String imgUrl;
 
     private Boolean isActive;

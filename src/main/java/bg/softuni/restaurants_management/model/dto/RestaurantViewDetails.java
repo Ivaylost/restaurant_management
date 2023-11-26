@@ -14,6 +14,18 @@ public class RestaurantViewDetails {
 
     private String imgUrl;
 
+    private Boolean isActive;
+    private MultipartFile file;
+
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    public RestaurantViewDetails setFile(MultipartFile file) {
+        this.file = file;
+        return this;
+    }
+
     public String getName() {
         return name;
     }
@@ -25,6 +37,15 @@ public class RestaurantViewDetails {
 
     public Long getId() {
         return id;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public RestaurantViewDetails setActive(Boolean active) {
+        isActive = active;
+        return this;
     }
 
     public RestaurantViewDetails setId(Long id) {

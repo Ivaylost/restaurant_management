@@ -1,17 +1,17 @@
 package bg.softuni.restaurants_management.web;
 
 import bg.softuni.restaurants_management.model.dto.RestaurantCreateBindingModel;
+import bg.softuni.restaurants_management.model.dto.RestaurantUpdateBindingModel;
 import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
-import bg.softuni.restaurants_management.service.ImageService;
 import bg.softuni.restaurants_management.service.RestaurantService;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -19,13 +19,9 @@ import java.util.List;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
-    private final ImageService imageService;
-    private final ModelMapper modelMapper;
 
-    public RestaurantController(RestaurantService restaurantService, ImageService imageService, ModelMapper modelMapper) {
+    public RestaurantController(RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
-        this.imageService = imageService;
-        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/create")
@@ -36,24 +32,15 @@ public class RestaurantController {
     }
 
     @PostMapping("/create")
-    public ModelAndView register(@ModelAttribute("restaurantCreateBindingModel") @Valid RestaurantCreateBindingModel restaurantCreateBindingModel,
-                                 BindingResult bindingResult) {
+    public ModelAndView create(@ModelAttribute("restaurantCreateBindingModel") @Valid RestaurantCreateBindingModel restaurantCreateBindingModel,
+                               BindingResult bindingResult) throws IOException {
 
-        String imageUrl = imageService.saveImageIntoFileSystem(restaurantCreateBindingModel);
-
-        if (bindingResult.hasErrors() || imageUrl == null) {
+        if (bindingResult.hasErrors()) {
             return new ModelAndView("restaurant-create");
         }
 
-        Restaurant restaurant = modelMapper.map(restaurantCreateBindingModel, Restaurant.class);
-        restaurant.setImgUrl(imageUrl);
-        boolean hasSuccessfulRegistration = restaurantService.createRestaurant(restaurant) != null;
+        Restaurant savedRestaurant = restaurantService.createRestaurant(restaurantCreateBindingModel);
 
-        if (!hasSuccessfulRegistration) {
-            ModelAndView modelAndView = new ModelAndView("restaurant-create");
-            modelAndView.addObject("hasRegistrationError", true);
-            return modelAndView;
-        }
         return new ModelAndView("redirect:/");
     }
 
@@ -66,10 +53,30 @@ public class RestaurantController {
     }
 
     @GetMapping("all")
-    public ModelAndView allRestaurants(){
+    public ModelAndView allRestaurants() {
         List<RestaurantViewDetails> restaurants = restaurantService.getAllRestaurants();
         ModelAndView view = new ModelAndView("restaurants");
         view.addObject("restaurants", restaurants);
         return view;
+    }
+
+    @GetMapping("/update/{id}")
+    public ModelAndView update(@PathVariable("id") Long id) {
+        RestaurantUpdateBindingModel restaurantUpdateBindingModel = restaurantService.getRestaurantBindingModelDetailsByRestaurantId(id);
+        ModelAndView view = new ModelAndView("restaurant-update");
+        view.addObject("restaurantUpdateBindingModel", restaurantUpdateBindingModel);
+        return view;
+    }
+
+    @PostMapping("/update/{id}")
+    public ModelAndView update(@ModelAttribute("restaurantUpdateBindingModel") @Valid RestaurantUpdateBindingModel restaurantUpdateBindingModel,
+                               BindingResult bindingResult, @PathVariable("id") Long id) throws IOException {
+
+        if (bindingResult.hasErrors()) {
+            return new ModelAndView("restaurant-update");
+        }
+
+        Restaurant updatedRestaurant = restaurantService.updateRestaurant(restaurantUpdateBindingModel, id);
+        return new ModelAndView("redirect:/");
     }
 }

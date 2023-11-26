@@ -12,16 +12,20 @@
         <thead>
         <tr>
             <th>Restaurant</th>
+            <th>Is Active</th>
             <th>Action</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="restaurant: ${restaurants}">
-            <td >
+            <td>
                 <a th:href="@{/admin/restaurants/details/{id}(id=*{restaurant.id})}" th:text="*{restaurant.name}"></a>
             </td>
-            <td> <a th:href="@{/admin/restaurants/details/{id}(id=*{restaurant.id})}" class="btn btn-outline-primary">Update</a>
-                <a th:href="@{/admin/restaurants/details/{id}(id=*{restaurant.id})}" class="btn btn-outline-secondary">Delete</a>
+            <td>
+                <a th:text="*{restaurant.active}"></a>
+            </td>
+            <td> <a th:href="@{/admin/restaurants/update/{id}(id=*{restaurant.id})}" class="btn btn-outline-primary">Update</a>
+                <a th:href="@{/admin/restaurants/delete/{id}(id=*{restaurant.id})}" class="btn btn-outline-secondary">Delete</a>
             </td>
         </tr>
         </tbody>

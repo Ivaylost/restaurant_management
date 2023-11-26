@@ -1,18 +1,23 @@
 package bg.softuni.restaurants_management.service;
 
 import bg.softuni.restaurants_management.model.dto.RestaurantCreateBindingModel;
+import bg.softuni.restaurants_management.model.dto.RestaurantUpdateBindingModel;
 import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
-import bg.softuni.restaurants_management.model.dto.UploadImgDto;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 public interface RestaurantService {
-    Restaurant createRestaurant(Restaurant restaurant);
+    Restaurant createRestaurant(RestaurantCreateBindingModel restaurantCreateBindingModel) throws IOException;
 
     RestaurantViewDetails getRestaurantViewDetailsByRestaurantId(Long id);
+    RestaurantUpdateBindingModel getRestaurantBindingModelDetailsByRestaurantId(Long id);
 
     List<RestaurantViewDetails> getAllRestaurants();
+
+    Restaurant updateRestaurant(RestaurantUpdateBindingModel restaurantUpdateBindingModel, Long id) throws IOException;
+
+    void updateImgUrl(Restaurant restaurant, String fileName);
 }
 
