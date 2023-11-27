@@ -7,8 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 public class RestaurantUpdateBindingModel {
 
     private Long id;
+    @NotEmpty
     private String name;
+    @NotEmpty
     private String lon;
+    @NotEmpty
     private String lat;
 
     private Boolean isActive;
