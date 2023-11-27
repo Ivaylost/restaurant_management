@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/head}"></head>
+
+
+<body>
+
+<div>
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+<div class="container">
+    <h2 class="text-center text-dark">User details</h2>
+    <form
+            th:object="${user}"
+            class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center"
+            enctype="multipart/form-data">
+        <fieldset disabled="disabled">
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <label for="full_name" class="text-white font-weight-bold">Full name</label>
+                    <input type="text" class="form-control" id="full_name"
+                           th:field="*{fullName}"/>
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                    <label for="email" class="text-white font-weight-bold">Email</label>
+                    <input class="form-control" id="email"
+                           th:field="*{email}"
+                           type="text"/>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+</body>
+</html>

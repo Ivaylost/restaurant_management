@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.config;
 
+import bg.softuni.restaurants_management.model.dto.UserDto;
 import bg.softuni.restaurants_management.model.dto.UserRegistrationBindingModel;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
 import bg.softuni.restaurants_management.model.enums.RoleEnums;
@@ -31,6 +32,9 @@ public class ModelMapperConfig {
         Provider<UserEntity> newUserProvider = req -> new UserEntity()
                 .setRoles(List.of(roleRepository.findByRole(RoleEnums.USER)));
 
+//        Provider<UserEntity> userProvider = req -> new UserEntity()
+//                .setRoles(List.of(roleRepository.findByRole(RoleEnums.USER)));
+
         Converter<String, String> passwordConverter
                 = ctx -> (ctx.getSource() == null)
                 ? null
@@ -42,6 +46,13 @@ public class ModelMapperConfig {
                 .addMappings(mapper -> mapper
                         .using(passwordConverter)
                         .map(UserRegistrationBindingModel::getPassword, UserEntity::setPassword));
+
+        modelMapper
+                .createTypeMap(UserEntity.class, UserDto.class)
+                .addMappings(mapper -> { mapper
+                        .map(UserEntity::getFullName, UserDto::setFullName
+                    );
+                });
 
         return modelMapper;
     }
