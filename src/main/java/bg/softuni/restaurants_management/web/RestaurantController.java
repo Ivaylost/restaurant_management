@@ -80,7 +80,7 @@ public class RestaurantController {
         return new ModelAndView("redirect:/admin/restaurants/all");
     }
 
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ModelAndView delete(@PathVariable("id") Long id) throws IOException {
         restaurantService.delete(id);
 

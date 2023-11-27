@@ -29,7 +29,7 @@
                 <a th:href="@{/admin/restaurants/update/{id}(id=*{restaurant.id})}" class="btn btn-outline-primary">Update</a>
             </td>
             <td>
-                <form th:method="post"
+                <form th:method="delete"
                       th:action="@{/admin/restaurants/delete/{id}(id=*{restaurant.id})}">
                     <a>
                         <input type="submit" class="btn-outline-secondary" value="Delete"/>
