@@ -11,7 +11,4 @@ public interface ImageService {
     void saveImageIntoFileSystem(MultipartFile file, String imageUrl);
 
     void delete(Restaurant restaurant) throws IOException;
-
-
-//    String updateImageIntoFileSystem(RestaurantUpdateBindingModel restaurantUpdateBindingModel) throws IOException;
 }

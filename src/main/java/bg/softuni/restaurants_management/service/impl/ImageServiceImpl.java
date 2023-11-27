@@ -1,8 +1,6 @@
 package bg.softuni.restaurants_management.service.impl;
 
-import bg.softuni.restaurants_management.model.dto.RestaurantCreateBindingModel;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
-import bg.softuni.restaurants_management.repository.RestaurantRepository;
 import bg.softuni.restaurants_management.service.ImageService;
 import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Service;
