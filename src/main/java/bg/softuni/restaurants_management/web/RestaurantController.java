@@ -41,7 +41,7 @@ public class RestaurantController {
 
         Restaurant savedRestaurant = restaurantService.createRestaurant(restaurantCreateBindingModel);
 
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/admin/restaurants/all");
     }
 
     @GetMapping("/details/{id}")
@@ -77,6 +77,13 @@ public class RestaurantController {
         }
 
         Restaurant updatedRestaurant = restaurantService.updateRestaurant(restaurantUpdateBindingModel, id);
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/admin/restaurants/all");
+    }
+
+    @PostMapping("/delete/{id}")
+    public ModelAndView delete(@PathVariable("id") Long id) throws IOException {
+        restaurantService.delete(id);
+
+        return new ModelAndView("redirect:/admin/restaurants/all");
     }
 }

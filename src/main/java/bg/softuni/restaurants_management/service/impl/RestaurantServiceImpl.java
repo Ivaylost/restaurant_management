@@ -84,4 +84,13 @@ public class RestaurantServiceImpl implements RestaurantService {
         restaurant.setImgUrl(pathToSaveImage);
         restaurantRepository.save(restaurant);
     }
+
+    @Override
+    public void delete(Long id) throws IOException {
+        Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+        if (restaurant.isPresent()){
+            imageService.delete(restaurant.get());
+            restaurantRepository.deleteById(id);
+        }
+    }
 }

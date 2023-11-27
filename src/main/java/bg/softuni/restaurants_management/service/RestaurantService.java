@@ -19,5 +19,7 @@ public interface RestaurantService {
     Restaurant updateRestaurant(RestaurantUpdateBindingModel restaurantUpdateBindingModel, Long id) throws IOException;
 
     void updateImgUrl(Restaurant restaurant, String fileName);
+
+    void delete(Long id) throws IOException;
 }
 

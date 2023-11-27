@@ -1,8 +1,10 @@
 package bg.softuni.restaurants_management.service.impl;
 
 import bg.softuni.restaurants_management.model.dto.RestaurantCreateBindingModel;
+import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.repository.RestaurantRepository;
 import bg.softuni.restaurants_management.service.ImageService;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,12 +16,6 @@ import java.io.OutputStream;
 @Service
 public class ImageServiceImpl implements ImageService {
 
-    private final RestaurantRepository restaurantRepository;
-
-    public ImageServiceImpl(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository;
-    }
-
     @Override
     public void saveImageIntoFileSystem(MultipartFile file, String imageUrl) {
         try {
@@ -29,10 +25,15 @@ public class ImageServiceImpl implements ImageService {
         }
     }
 
-//    @Override
-//    public void updateImage(MultipartFile file, String imgUrl) throws IOException {
-//        saveImage(imgUrl, file);
-//    }
+    @Override
+    public void delete(Restaurant restaurant) throws IOException {
+        String[] split = restaurant.getImgUrl().split("\\.");
+        String suffix = split[split.length-1];
+        String path = ("src\\main\\resources\\static" + restaurant.getImgUrl()).replace("\\primaryImage." + suffix, "");
+        File file = new File(path);
+        FileUtils.cleanDirectory(file);
+        FileUtils.forceDelete(file);
+    }
 
     private void saveImage(String pathToSaveImage, MultipartFile image) throws IOException {
         File file = new File(pathToSaveImage);
