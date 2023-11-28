@@ -61,7 +61,7 @@ public class TableController {
 
         manageTableService.createTable(tableCreateBindingModel);
 
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/manage/tables/all");
     }
 
     @GetMapping("/all")
@@ -77,7 +77,7 @@ public class TableController {
         return view;
     }
 
-    @GetMapping("/removeTable/{restaurantId}/{tableId}")
+    @GetMapping("/removeTable/{tableId}")
     public ModelAndView removeTable(@PathVariable("tableId") Long tableId){
         manageTableService.removeTable(tableId);
         return new ModelAndView("redirect:/manage/tables/all");

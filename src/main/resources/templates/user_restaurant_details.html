@@ -25,7 +25,7 @@
             </td>
             <td>
                 <form th:method="get"
-                      th:action="@{/manage/tables/removeTable/{restaurant_id}/{table_id}(restaurant_id=*{restaurant.id},table_id=*{table.id})}">
+                      th:action="@{/manage/tables/removeTable/{table_id}(table_id=*{table.id})}">
                     <a>
                         <input type="submit" class="btn-outline-secondary" value="Remove"/>
                     </a>
