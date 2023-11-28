@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/head}"></head>
+
+
+<body>
+
+<div>
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+<div class="container" th:each="restaurant: ${restaurantViewDetailsList}">
+    <h2 class="text-center text-dark" th:text="*{restaurant.name}"></h2>
+    <table class="table table-striped table-responsive-md">
+        <thead>
+        <tr>
+            <th>Table</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="table: ${restaurant.tableViewDetails}">
+            <td>
+                <a th:text="*{table.name}"></a>
+            </td>
+            <td>
+                <form th:method="get"
+                      th:action="@{/manage/tables/removeTable/{restaurant_id}/{table_id}(restaurant_id=*{restaurant.id},table_id=*{table.id})}">
+                    <a>
+                        <input type="submit" class="btn-outline-secondary" value="Remove"/>
+                    </a>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

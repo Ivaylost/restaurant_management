@@ -29,4 +29,10 @@ public class ManageTableServiceImpl implements ManageTableService {
         table.setRestaurant(restaurant);
         tableRepository.save(table);
     }
+
+    @Override
+    public void removeTable(Long tableId) {
+        TableEntity table = tableRepository.findById(tableId).get();
+            tableRepository.delete(table);
+    }
 }
