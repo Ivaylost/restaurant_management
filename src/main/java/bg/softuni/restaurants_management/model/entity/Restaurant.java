@@ -1,10 +1,10 @@
 package bg.softuni.restaurants_management.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "restaurants")
@@ -22,6 +22,20 @@ public class Restaurant extends BaseEntity{
     private String imgUrl;
 
     private Boolean isActive;
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            mappedBy = "restaurant"
+    )
+    private List<TableEntity> tableEntities = new ArrayList<>();
+
+    public List<TableEntity> getTableEntities() {
+        return tableEntities;
+    }
+
+    public Restaurant setTableEntities(List<TableEntity> tableEntities) {
+        this.tableEntities = tableEntities;
+        return this;
+    }
 
     public String getName() {
         return name;

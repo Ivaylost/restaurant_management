@@ -1,20 +1,32 @@
 package bg.softuni.restaurants_management.model.dto;
 
-import bg.softuni.restaurants_management.model.entity.Restaurant;
-import jakarta.validation.constraints.NotEmpty;
+import bg.softuni.restaurants_management.model.entity.TableEntity;
+import org.modelmapper.ModelMapper;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.stream.Stream;
 
 public class RestaurantViewDetails {
     private Long id;
     private String name;
-
     private String lon;
-
     private String lat;
+    private Boolean isActive;
+    private List<TableViewDetails> tableViewDetails;
+
+    public List<TableViewDetails> getTableViewDetails() {
+        return tableViewDetails;
+    }
+
+    public RestaurantViewDetails setTableViewDetails(List<TableEntity> tableEntities) {
+        this.tableViewDetails = tableEntities.stream()
+                .map(x -> new TableViewDetails().setId(x.getId()).setName(x.getName()))
+                .toList();
+        return this;
+    }
 
     private String imgUrl;
-
-    private Boolean isActive;
     private MultipartFile file;
 
     public MultipartFile getFile() {

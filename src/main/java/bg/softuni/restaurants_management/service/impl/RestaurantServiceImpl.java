@@ -3,7 +3,9 @@ package bg.softuni.restaurants_management.service.impl;
 import bg.softuni.restaurants_management.model.dto.RestaurantCreateBindingModel;
 import bg.softuni.restaurants_management.model.dto.RestaurantUpdateBindingModel;
 import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
+import bg.softuni.restaurants_management.model.dto.TableCreateBindingModel;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
+import bg.softuni.restaurants_management.model.entity.TableEntity;
 import bg.softuni.restaurants_management.repository.RestaurantRepository;
 import bg.softuni.restaurants_management.service.ImageService;
 import bg.softuni.restaurants_management.service.RestaurantService;
@@ -91,6 +93,18 @@ public class RestaurantServiceImpl implements RestaurantService {
         if (restaurant.isPresent()){
             imageService.delete(restaurant.get());
             restaurantRepository.deleteById(id);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updateRestaurantsWithTable(TableCreateBindingModel tableCreateBindingModel) {
+        Optional<Restaurant> restaurant = restaurantRepository.findById(tableCreateBindingModel.getRestaurantId());
+        if(restaurant.isPresent()){
+            Restaurant restaurantToUpdate = restaurant.get();
+            TableEntity table = new TableEntity().setName(tableCreateBindingModel.getName()).setRestaurant(restaurantToUpdate);
+            restaurantToUpdate.getTableEntities().add(table);
+            restaurantRepository.save(restaurantToUpdate);
         }
     }
 }

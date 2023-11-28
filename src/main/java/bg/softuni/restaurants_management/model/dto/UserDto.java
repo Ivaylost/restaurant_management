@@ -31,12 +31,9 @@ public class UserDto {
                     .collect(Collectors.joining(""));
         }
     public boolean isManager() {
-        for (Role role : roles) {
-            if (role.getRole().equals(RoleEnums.MANAGER)) {
-                return true;
-            }
-        }
-        return false;
+        return roles.stream()
+                .map(Role::getRole)
+                .anyMatch(x -> x.equals(RoleEnums.MANAGER));
     }
 
     public List<Role> getRoles() {
