@@ -15,4 +15,6 @@ public interface AdminUserService {
     void delete(Long userId, Long roleId);
 
     void assignRole(Long userId, Long roleId);
+
+    Long getUserByEmail(String email);
 }

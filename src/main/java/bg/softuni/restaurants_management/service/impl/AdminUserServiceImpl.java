@@ -83,6 +83,12 @@ public class AdminUserServiceImpl implements AdminUserService {
         }
     }
 
+    @Override
+    public Long getUserByEmail(String email) {
+        Optional<UserEntity> optionalUser = adminUserRepository.findByEmail(email);
+        return optionalUser.<Long>map(UserEntity::getId).orElse(null);
+    }
+
     private List<Role> getAllRoles() {
         return roleRepository.findAll();
     }

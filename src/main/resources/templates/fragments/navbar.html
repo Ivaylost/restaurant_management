@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
 </head>
 
@@ -29,10 +29,11 @@
                     <a class="nav-link dropdown-toggle" href="/" id="adminDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/admin/restaurants/all}">All restaurants</a>
                         <a class="dropdown-item" th:href="@{/admin/restaurants/create}">Create restaurants</a>
-                        <a class="dropdown-item" th:href="@{/admin/restaurants/all}">Restaurants</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/admin/users/all}">All users</a>
+                        <a class="dropdown-item" th:href="@{/admin/users/findByEmail}">Find user by email</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">

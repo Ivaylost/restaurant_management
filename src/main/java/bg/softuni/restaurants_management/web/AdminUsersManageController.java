@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.web;
 
+import bg.softuni.restaurants_management.model.dto.RestaurantUpdateBindingModel;
 import bg.softuni.restaurants_management.model.dto.UserDto;
 import bg.softuni.restaurants_management.model.entity.Role;
 import bg.softuni.restaurants_management.service.AdminUserService;
@@ -52,5 +53,19 @@ public class AdminUsersManageController {
                                    @PathVariable("role_id") Long role_id){
         adminUserService.delete(user_id, role_id);
         return new ModelAndView("redirect:/admin/users/details/" + user_id);
+    }
+
+
+
+    @GetMapping("/findByEmail")
+    public ModelAndView findByEmail() {
+        return new ModelAndView("find-user");
+    }
+
+    @PostMapping("/findByEmail")
+    public ModelAndView findByEmail(@RequestParam("email") String email) {
+        Long userId = adminUserService.getUserByEmail(email);
+
+        return new ModelAndView("redirect:/admin/users/details/" + userId);
     }
 }
