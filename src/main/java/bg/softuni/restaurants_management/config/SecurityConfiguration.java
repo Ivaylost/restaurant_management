@@ -30,6 +30,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/statics/**").permitAll()
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
                         .requestMatchers("/admin/**").hasRole(RoleEnums.ADMIN.name())
+                        .requestMatchers("/manager/**").hasRole(RoleEnums.MANAGER.name())
                         .anyRequest().permitAll()
         ).formLogin(
                 formLogin -> {

@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.model.entity;
 
+import bg.softuni.restaurants_management.model.enums.RoleEnums;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class UserEntity extends BaseEntity{
+public class UserEntity extends BaseEntity {
     @Column(unique = true)
     private String email;
 
@@ -17,6 +18,18 @@ public class UserEntity extends BaseEntity{
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private List<Restaurant> restaurants = new ArrayList<>();
+
+    public List<Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
+    public UserEntity setRestaurants(List<Restaurant> restaurants) {
+        this.restaurants = restaurants;
+        return this;
+    }
 
     public List<Role> getRoles() {
         return roles;
@@ -63,7 +76,7 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
-    public String getFullName(){
+    public String getFullName() {
         return firstName + " " + lastName;
     }
 }

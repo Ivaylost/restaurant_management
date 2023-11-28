@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.model.dto;
 
+import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.Role;
 import bg.softuni.restaurants_management.model.enums.RoleEnums;
 import jakarta.validation.constraints.NotEmpty;
@@ -15,11 +16,30 @@ public class UserDto {
     private String email;
     private List<Role> roles;
 
+    private List<Restaurant> restaurants;
+
+    public List<Restaurant> getRestaurants() {
+        return restaurants;
+    }
+
+    public UserDto setRestaurants(List<Restaurant> restaurants) {
+        this.restaurants = restaurants;
+        return this;
+    }
+
     public String getRolesAsString()  {
            return roles.stream().map(Role::getRole)
                     .map(RoleEnums::name)
                     .collect(Collectors.joining(""));
         }
+    public boolean isManager() {
+        for (Role role : roles) {
+            if (role.getRole().equals(RoleEnums.MANAGER)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     public List<Role> getRoles() {
         return roles;

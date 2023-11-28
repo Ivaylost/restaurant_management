@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:sec="http://www.w3.org/1999/xhtml">
 
 <head th:replace="~{fragments/head}"></head>
 
@@ -59,25 +59,74 @@
         <h2 class="text-center text-dark">Assign role</h2>
         <form th:method="post"
               th:action="@{/admin/users/assignRole/{user_id}(user_id=*{user.id})}">
-        <div class="row">
-            <div class="form-group col-md-6 mb-3">
-                <select id="role_id" name="role_id" class="form-control">
-                    <option th:value="0">select role</option>
-                    <option th:each="role : ${unassignedRoles}"
-                            th:value="${role.id}"
-                            th:text="${role.role.name()}">
-                    </option>
-                </select>
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <select id="role_id" name="role_id" class="form-control">
+                        <option th:value="0">select role</option>
+                        <option th:each="role : ${unassignedRoles}"
+                                th:value="${role.id}"
+                                th:text="${role.role.name()}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                    <a>
+                        <input type="submit" class="btn-outline-secondary" value="Assign"/>
+                    </a>
+                </div>
             </div>
-            <div class="form-group col-md-6 mb-3">
-                <a>
-                    <input type="submit" class="btn-outline-secondary" value="Assign"/>
-                </a>
-            </div>
-        </div>
 
         </form>
     </div>
+    <div class="container" th:if="*{user.isManager()}">
+        <table class="table table-striped table-responsive-md">
+            <thead>
+            <tr>
+                <th>Restaurant</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="restaurant: ${user.restaurants}">
+                <td>
+                    <a th:text="*{restaurant.name}"></a>
+                </td>
+                <td>
+                    <form th:method="post"
+                          th:action="@{/admin/users/unassignRestaurant/{user_id}/{restaurant_id}(restaurant_id=*{restaurant.id},user_id=*{user.id})}">
+                        <a>
+                            <input type="submit" class="btn-outline-secondary" value="Unassign"/>
+                        </a>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container" th:if="*{user.isManager()}">
+        <h2 class="text-center text-dark">Assign restaurant</h2>
+        <form th:method="post"
+              th:action="@{/admin/users/assignRestaurant/{user_id}(user_id=*{user.id})}">
+            <div class="row">
+                <div class="form-group col-md-6 mb-3">
+                    <select id="restaurant_id" name="restaurant_id" class="form-control">
+                        <option th:value="0">select restaurant</option>
+                        <option th:each="restaurant : ${unassignedRestaurants}"
+                                th:value="${restaurant.id}"
+                                th:text="${restaurant.name}">
+                        </option>
+                    </select>
+                </div>
+                <div class="form-group col-md-6 mb-3">
+                    <a>
+                        <input type="submit" class="btn-outline-secondary" value="Assign"/>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+
 </div>
 </body>
 </html>
