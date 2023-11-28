@@ -13,7 +13,7 @@ public interface AdminUserService {
 
     List<Role> getUnassignedRoles(Long userId);
 
-    void delete(Long userId, Long roleId);
+    void removeRole(Long userId, Long roleId);
 
     void assignRole(Long userId, Long roleId);
 

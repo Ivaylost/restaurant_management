@@ -1,6 +1,5 @@
 package bg.softuni.restaurants_management.web;
 
-import bg.softuni.restaurants_management.model.dto.RestaurantUpdateBindingModel;
 import bg.softuni.restaurants_management.model.dto.UserDto;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.Role;
@@ -57,10 +56,10 @@ public class AdminUsersManageController {
         return new ModelAndView("redirect:/admin/users/details/" + user_id);
     }
 
-    @DeleteMapping("/deleteRole/{user_id}/{role_id}")
+    @GetMapping("/removeRole/{user_id}/{role_id}")
     public ModelAndView deleteRole(@PathVariable("user_id") Long user_id,
                                    @PathVariable("role_id") Long role_id){
-        adminUserService.delete(user_id, role_id);
+        adminUserService.removeRole(user_id, role_id);
         return new ModelAndView("redirect:/admin/users/details/" + user_id);
     }
 

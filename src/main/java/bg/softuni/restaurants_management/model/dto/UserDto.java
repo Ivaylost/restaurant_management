@@ -3,11 +3,9 @@ package bg.softuni.restaurants_management.model.dto;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.Role;
 import bg.softuni.restaurants_management.model.enums.RoleEnums;
-import jakarta.validation.constraints.NotEmpty;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class UserDto {
 

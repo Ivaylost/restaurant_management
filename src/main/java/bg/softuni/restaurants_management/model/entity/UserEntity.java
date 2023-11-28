@@ -1,6 +1,5 @@
 package bg.softuni.restaurants_management.model.entity;
 
-import bg.softuni.restaurants_management.model.enums.RoleEnums;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
