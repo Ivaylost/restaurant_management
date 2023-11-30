@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -34,25 +35,29 @@ public class ReservationServiceImpl implements ReservationService {
     public void initReservationByRestaurant(CreateAllReservationsDateBindingModel createAllReservationsDateBindingModel) {
         List<TableEntity> tables = null;
         Optional<Restaurant> restaurant = restaurantRepository.findById(createAllReservationsDateBindingModel.getRestaurantId());
-
-        if (restaurant.isPresent()) {
-            tables = restaurant.get().getTableEntities();
-        }
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate localDate = LocalDate.parse(createAllReservationsDateBindingModel.getDatepicker(), formatter);
-        List<ReservationEnums> values = Arrays.stream(ReservationEnums.values()).toList();
 
-        List<Reservation> list = tables.stream()
-                .map(table -> {
-                    return values.stream()
-                            .map(reservationEnums -> {
-                                return new Reservation().setDate(localDate).setTable(table).setReservations(reservationEnums);
-                            }).toList();
-                }).toList()
-                .stream().flatMap(List::stream)
-                .collect(Collectors.toList());
+        if (restaurant.isPresent() && checkForReservation(localDate).isEmpty()) {
+            tables = restaurant.get().getTableEntities();
 
-        reservationRepository.saveAll(list);
+            List<ReservationEnums> values = Arrays.stream(ReservationEnums.values()).toList();
+
+            List<Reservation> list = tables.stream()
+                    .map(table -> {
+                        return values.stream()
+                                .map(reservationEnums -> {
+                                    return new Reservation().setDate(localDate).setTable(table).setReservations(reservationEnums);
+                                }).toList();
+                    }).toList()
+                    .stream().flatMap(List::stream)
+                    .collect(Collectors.toList());
+
+            reservationRepository.saveAll(list);
+        }
+    }
+
+    private List<Reservation> checkForReservation(LocalDate date) {
+        return reservationRepository.findAllByDateIs(date).orElse(new ArrayList<>());
     }
 }
