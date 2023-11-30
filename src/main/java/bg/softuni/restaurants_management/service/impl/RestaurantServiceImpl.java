@@ -107,4 +107,9 @@ public class RestaurantServiceImpl implements RestaurantService {
             restaurantRepository.save(restaurantToUpdate);
         }
     }
+
+    @Override
+    public String getRestaurantName(Long restaurantId) {
+        return restaurantRepository.findById(restaurantId).get().getName();
+    }
 }

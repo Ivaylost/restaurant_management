@@ -57,6 +57,14 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
+    @Override
+    public List<Reservation> findAllByDateIsAndUser_IdAndTable_Restaurant_Id(Long restaurantId, Long userId, String datepicker) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        LocalDate localDate = LocalDate.parse(datepicker, formatter);
+        List<Reservation> allByDateIsAndTableRestaurantId = reservationRepository.findAllByDateIsAndUser_IdAndTable_Restaurant_Id(localDate, userId, restaurantId);
+        return allByDateIsAndTableRestaurantId;
+    }
+
     private List<Reservation> checkForReservation(LocalDate date) {
         return reservationRepository.findAllByDateIs(date).orElse(new ArrayList<>());
     }

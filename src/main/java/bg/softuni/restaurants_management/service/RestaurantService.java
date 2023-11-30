@@ -26,9 +26,7 @@ public interface RestaurantService {
 
     void updateRestaurantsWithTable(TableCreateBindingModel tableCreateBindingModel);
 
-    @Service
-    class ReservationService {
+    String getRestaurantName(Long restaurantId);
 
-    }
 }
 

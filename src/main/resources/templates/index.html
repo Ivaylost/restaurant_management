@@ -12,16 +12,43 @@
 </div>
 
 
-<div class="container-fluid">
+<div class="container">
+
     <div class="row">
-        <div>
+        <div class="column">
             <img class="picture" alt="image" th:src="@{/img/bar.jpg}"/>
         </div>
-        <div class="home">
-            <p>For a true 'whisky lovers,' Brothers' bar celebrates the joy of Finest drinks in a warm and buzzy
-                atmosphere.</p>
+        <div class="column">
+            <table class="table table-striped table-responsive-md">
+                <thead>
+                <tr>
+                    <th>Welcome to our restaurants!</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="restaurant: ${allRestaurants}">
+                    <td>
+                        <a th:text="*{restaurant.name}"></a>
+                    </td>
+                    <td >
+                        <form sec:authorize="isAuthenticated()"
+                              th:method="get"
+                              th:action="@{/userReservation/{restaurant_id}(restaurant_id=*{restaurant.id})}">
+                            <a>
+                                <input type="submit" class="btn-outline-secondary" value="Reservation"/>
+                            </a>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
+<div class="container">
+    <p>For a true 'whisky lovers,' our restaurants celebrates the joy of Finest drinks and food in a warm and buzzy
+        atmosphere.</p>
 </div>
 </body>
 

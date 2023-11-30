@@ -1,7 +1,5 @@
 package bg.softuni.restaurants_management.model.dto;
 
-import java.time.LocalDate;
-
 public class CreateAllReservationsDateBindingModel {
     private String datepicker;
 

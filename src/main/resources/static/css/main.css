@@ -11,6 +11,7 @@ body {
 .picture {
      padding: 1%;
      border-radius: 20px;
+     width: 400px;
 }
 
 .home {
@@ -61,6 +62,13 @@ form.main-form {
      background-image: linear-gradient(to bottom right, rgba(210, 210, 210, 0.8), rgba(10, 10, 10, 0.8));
      padding:10px 30px;
      border-radius: 30px;
+}
+.row {
+     display: flex;
+}
+
+.column {
+     flex: 50%;
 }
 
 .field-error {

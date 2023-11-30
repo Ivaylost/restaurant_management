@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{fragments/head}"></head>
+<body>
+<div>
+    <nav th:replace="~{fragments/navbar}"></nav>
+</div>
+<div class="container">
+
+    <h2 class="text-center text-dark">Create reservation</h2>
+    <form th:method="post"
+          th:action="@{/userReservation/{restaurantId}(restaurantId=*{restaurantId})}"
+          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+        <div class="row">
+            <div class='col-sm-6'>
+                <div class="form-group">
+                    <label for="datepicker" class="text-white font-weight-bold">Select a Date:</label>
+                    <input type="text" id="datepicker" name="datepicker" class="form-control">
+                </div>
+            </div>
+
+            <div class="form-group col-md-6 mb-3">
+                <label for="restaurantId" class="text-white font-weight-bold">Restaurant</label>
+                <input type="text" id="restaurantId" name="restaurantId"
+                       th:value="*{restaurantName}"
+                       readonly/>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="button-holder d-flex">
+                    <input type="submit" class="btn btn-dark btn-lg" value="Create"/>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+
+<div>
+    <footer></footer>
+</div>
+<script>
+    $('#datepicker').datepicker({
+        format: 'mm/dd/yyyy',
+        startDate: '0d',
+        autoclose: true
+    });
+    $('#datepicker').datepicker('setDate', new Date());
+</script>
+</body>
+</html>

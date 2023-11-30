@@ -12,4 +12,7 @@ import java.util.Optional;
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
     Optional<List<Reservation>> findAllByDateIs(LocalDate date);
+
+    //    List<Reservation> findAllByTable_Restaurant_IdAndTable(Long restaurantId, LocalDate date);
+    List<Reservation> findAllByDateIsAndUser_IdAndTable_Restaurant_Id(LocalDate date, Long userId, Long restaurantId);
 }
