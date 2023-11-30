@@ -18,8 +18,21 @@ public class UserEntity extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY,
+    mappedBy = "user")
+    private List<Reservation> reservations = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Restaurant> restaurants = new ArrayList<>();
+
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public UserEntity setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
+        return this;
+    }
 
     public List<Restaurant> getRestaurants() {
         return restaurants;
