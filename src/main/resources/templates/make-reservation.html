@@ -8,34 +8,41 @@
 </div>
 <div class="container">
 
-    <h2 class="text-center text-dark">Create reservation</h2>
-    <form th:method="get"
-          th:action="@{/userReservation/{restaurantId}(restaurandId=*{restaurantId})}"
-          class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
-        <div class="row">
-            <div class='col-sm-6'>
-                <div class="form-group">
-                    <label for="datepicker" class="text-white font-weight-bold">Select a Date:</label>
-                    <input type="text" id="datepicker" name="datepicker" class="form-control">
-                </div>
-            </div>
-
-            <div class="form-group col-md-6 mb-3">
-                <label for="restaurantId" class="text-white font-weight-bold">Restaurant</label>
-                <input type="text" id="restaurantId" name="restaurantId"
-                       th:value="*{restaurantName}"
-                       readonly/>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col col-md-4">
-                <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-dark btn-lg" value="Create"/>
-                </div>
-            </div>
-        </div>
-
-    </form>
+    <h2 class="text-center text-dark">Available reservations</h2>
+    <div class="container">
+        <table class="table table-striped table-responsive-md">
+            <thead>
+            <tr>
+                <th>Restaurant name</th>
+                <th>Reservation name</th>
+                <th>Table name</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="reservation: ${reservationViews}">
+                <td>
+                    <a th:text="*{reservation.restaurantName}"></a>
+                </td>
+                <td>
+                    <a th:text="*{reservation.reservationName}"></a>
+                </td>
+                <td>
+                    <a th:text="*{reservation.tableName}"></a>
+                </td>
+                <td>
+                    <form th:method="post"
+                          th:action="@{/makeReservation}">
+                        <a>
+                            <input  type="hidden" name="reservationId" th:value="*{reservation.reservationId}"/>
+                            <button type="submit">Make reservation</button>
+                        </a>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 

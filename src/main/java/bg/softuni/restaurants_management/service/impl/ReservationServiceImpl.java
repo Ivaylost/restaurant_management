@@ -1,13 +1,17 @@
 package bg.softuni.restaurants_management.service.impl;
 
 import bg.softuni.restaurants_management.model.dto.CreateAllReservationsDateBindingModel;
+import bg.softuni.restaurants_management.model.dto.ReservationViewModel;
 import bg.softuni.restaurants_management.model.entity.Reservation;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.TableEntity;
+import bg.softuni.restaurants_management.model.entity.UserEntity;
 import bg.softuni.restaurants_management.model.enums.ReservationEnums;
 import bg.softuni.restaurants_management.repository.ReservationRepository;
 import bg.softuni.restaurants_management.repository.RestaurantRepository;
 import bg.softuni.restaurants_management.service.ReservationService;
+import bg.softuni.restaurants_management.service.UserService;
+import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +27,13 @@ import java.util.stream.Collectors;
 public class ReservationServiceImpl implements ReservationService {
     private final ReservationRepository reservationRepository;
     private final RestaurantRepository restaurantRepository;
+    private final UserService userService;
     private final ModelMapper modelMapper;
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository, RestaurantRepository restaurantRepository, ModelMapper modelMapper) {
+    public ReservationServiceImpl(ReservationRepository reservationRepository, RestaurantRepository restaurantRepository, UserService userService, ModelMapper modelMapper) {
         this.reservationRepository = reservationRepository;
         this.restaurantRepository = restaurantRepository;
+        this.userService = userService;
         this.modelMapper = modelMapper;
     }
 
@@ -58,11 +64,27 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<Reservation> findAllByDateIsAndUser_IdAndTable_Restaurant_Id(Long restaurantId, Long userId, String datepicker) {
+    public List<ReservationViewModel> findAllByDateIsAndUser_IdAndTable_Restaurant_Id(Long restaurantId, Long userId, String datepicker) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate localDate = LocalDate.parse(datepicker, formatter);
-        List<Reservation> allByDateIsAndTableRestaurantId = reservationRepository.findAllByDateIsAndUser_IdAndTable_Restaurant_Id(localDate, userId, restaurantId);
-        return allByDateIsAndTableRestaurantId;
+        List<Reservation> allByDateIsAndTableRestaurantId =
+                reservationRepository.findAllByDateIsAndUser_IdAndTable_Restaurant_Id(localDate, userId, restaurantId);
+        return allByDateIsAndTableRestaurantId.stream()
+                .map(view -> modelMapper.map(view, ReservationViewModel.class))
+                .toList();
+    }
+
+    @Override
+    @Transactional
+    public void makeReservation(Long reservationId, String userEmail) {
+        Optional<Reservation> reservation = reservationRepository.findById(reservationId);
+        Optional<UserEntity> userByEmail = userService.findUserByEmail(userEmail);
+
+        if (reservation.isPresent() && userByEmail.isPresent()){
+            Reservation updatedReservation = reservation.get().setUser(userByEmail.get());
+            reservationRepository.save(updatedReservation);
+        }
+
     }
 
     private List<Reservation> checkForReservation(LocalDate date) {

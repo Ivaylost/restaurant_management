@@ -1,9 +1,7 @@
 package bg.softuni.restaurants_management.config;
 
-import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
-import bg.softuni.restaurants_management.model.dto.TableViewDetails;
-import bg.softuni.restaurants_management.model.dto.UserDto;
-import bg.softuni.restaurants_management.model.dto.UserRegistrationBindingModel;
+import bg.softuni.restaurants_management.model.dto.*;
+import bg.softuni.restaurants_management.model.entity.Reservation;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.TableEntity;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
@@ -59,6 +57,21 @@ public class ModelMapperConfig {
                 .addMappings(mapper -> {
                     mapper.map(Restaurant::getTableEntities, RestaurantViewDetails::setTableViewDetails);
                 });
+
+        Provider<ReservationViewModel> bindReservationToReservationViewModel = ctx -> {
+            Reservation reservation = (Reservation) ctx.getSource();
+
+            ReservationViewModel reservationViewModel = new ReservationViewModel();
+            reservationViewModel.setReservationId(reservation.getId());
+            reservationViewModel.setTableName(reservationViewModel.getTableName());
+            reservationViewModel.setRestaurantName(reservation.getTable().getRestaurant().getName());
+            reservationViewModel.setReservationName(reservation.getReservations().name());
+            return reservationViewModel;
+        };
+
+        modelMapper
+                .createTypeMap(Reservation.class, ReservationViewModel.class)
+                .setProvider(bindReservationToReservationViewModel);
 
         return modelMapper;
     }
