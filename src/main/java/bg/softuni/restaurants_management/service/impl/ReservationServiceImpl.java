@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.service.impl;
 
+import bg.softuni.restaurants_management.error.ObjectNotFoundException;
 import bg.softuni.restaurants_management.model.dto.CreateAllReservationsDateBindingModel;
 import bg.softuni.restaurants_management.model.dto.ReservationViewModel;
 import bg.softuni.restaurants_management.model.entity.Reservation;
@@ -79,10 +80,11 @@ public class ReservationServiceImpl implements ReservationService {
         Optional<Reservation> reservation = reservationRepository.findById(reservationId);
         Optional<UserEntity> userByEmail = userService.findUserByEmail(userEmail);
 
-        if (reservation.isPresent() && userByEmail.isPresent()) {
-            Reservation updatedReservation = reservation.get().setUser(userByEmail.get());
-            reservationRepository.save(updatedReservation);
+        if (reservation.isEmpty() || userByEmail.isEmpty()) {
+            throw new ObjectNotFoundException("Object not found!");
         }
+        Reservation updatedReservation = reservation.get().setUser(userByEmail.get());
+        reservationRepository.save(updatedReservation);
 
     }
 

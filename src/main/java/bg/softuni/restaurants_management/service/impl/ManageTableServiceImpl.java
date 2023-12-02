@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.service.impl;
 
+import bg.softuni.restaurants_management.error.ObjectNotFoundException;
 import bg.softuni.restaurants_management.model.dto.TableCreateBindingModel;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.TableEntity;
@@ -32,7 +33,10 @@ public class ManageTableServiceImpl implements ManageTableService {
 
     @Override
     public void removeTable(Long tableId) {
-        TableEntity table = tableRepository.findById(tableId).get();
-            tableRepository.delete(table);
+        Optional<TableEntity> optionalTableEntity = tableRepository.findById(tableId);
+        if (optionalTableEntity.isEmpty()) {
+            throw new ObjectNotFoundException("Object not found!");
+        }
+            tableRepository.delete(optionalTableEntity.get());
     }
 }

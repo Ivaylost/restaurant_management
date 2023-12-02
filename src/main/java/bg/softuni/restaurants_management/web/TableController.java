@@ -4,7 +4,6 @@ import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
 import bg.softuni.restaurants_management.model.dto.TableCreateBindingModel;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
 import bg.softuni.restaurants_management.service.ManageTableService;
-import bg.softuni.restaurants_management.service.RestaurantService;
 import bg.softuni.restaurants_management.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;

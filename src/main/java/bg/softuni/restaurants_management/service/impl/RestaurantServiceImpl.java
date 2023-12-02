@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.service.impl;
 
+import bg.softuni.restaurants_management.error.ObjectNotFoundException;
 import bg.softuni.restaurants_management.model.dto.RestaurantCreateBindingModel;
 import bg.softuni.restaurants_management.model.dto.RestaurantUpdateBindingModel;
 import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
@@ -48,12 +49,20 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public RestaurantViewDetails getRestaurantViewDetailsByRestaurantId(Long id) {
         Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+
+        if (restaurant.isEmpty()) {
+            throw new ObjectNotFoundException("Object not found!");
+        }
+
         return modelMapper.map(restaurant, RestaurantViewDetails.class);
     }
 
     @Override
     public RestaurantUpdateBindingModel getRestaurantBindingModelDetailsByRestaurantId(Long id) {
         Optional<Restaurant> restaurant = restaurantRepository.findById(id);
+        if (restaurant.isEmpty()) {
+            throw new ObjectNotFoundException("Object not found!");
+        }
         return modelMapper.map(restaurant, RestaurantUpdateBindingModel.class);
     }
 
@@ -73,6 +82,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant updateRestaurant(RestaurantUpdateBindingModel restaurantUpdateBindingModel, Long id) throws IOException {
         Restaurant restaurant = modelMapper.map(restaurantUpdateBindingModel, Restaurant.class);
         Optional<Restaurant> updatedRestaurant = restaurantRepository.findById(id);
+
+        if (updatedRestaurant.isEmpty()) {
+            throw new ObjectNotFoundException("Object not found!");
+        }
+
         if (restaurantUpdateBindingModel.getFile().getSize() > 0) {
             String path = "src\\main\\resources\\static" + updatedRestaurant.get().getImgUrl();
             imageService.saveImageIntoFileSystem(restaurantUpdateBindingModel.getFile(), path);
@@ -90,26 +104,34 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public void delete(Long id) throws IOException {
         Optional<Restaurant> restaurant = restaurantRepository.findById(id);
-        if (restaurant.isPresent()){
-            imageService.delete(restaurant.get());
-            restaurantRepository.deleteById(id);
+
+        if (restaurant.isEmpty()) {
+            throw new ObjectNotFoundException("Object not found!");
         }
+        imageService.delete(restaurant.get());
+        restaurantRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public void updateRestaurantsWithTable(TableCreateBindingModel tableCreateBindingModel) {
         Optional<Restaurant> restaurant = restaurantRepository.findById(tableCreateBindingModel.getRestaurantId());
-        if(restaurant.isPresent()){
-            Restaurant restaurantToUpdate = restaurant.get();
-            TableEntity table = new TableEntity().setName(tableCreateBindingModel.getName()).setRestaurant(restaurantToUpdate);
-            restaurantToUpdate.getTableEntities().add(table);
-            restaurantRepository.save(restaurantToUpdate);
+        if (restaurant.isEmpty()) {
+            throw new ObjectNotFoundException("Object not found!");
         }
+        Restaurant restaurantToUpdate = restaurant.get();
+        TableEntity table = new TableEntity().setName(tableCreateBindingModel.getName()).setRestaurant(restaurantToUpdate);
+        restaurantToUpdate.getTableEntities().add(table);
+        restaurantRepository.save(restaurantToUpdate);
     }
 
     @Override
     public String getRestaurantName(Long restaurantId) {
-        return restaurantRepository.findById(restaurantId).get().getName();
+        Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(restaurantId);
+        if (optionalRestaurant.isEmpty()) {
+            throw new ObjectNotFoundException("Object not found!");
+        }
+
+        return optionalRestaurant.get().getName();
     }
 }

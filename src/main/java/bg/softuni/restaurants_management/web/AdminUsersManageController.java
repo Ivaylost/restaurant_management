@@ -49,6 +49,7 @@ public class AdminUsersManageController {
     @PostMapping("/assignRole/{user_id}")
     public ModelAndView assignRole(@PathVariable("user_id") Long user_id,
                                    @RequestParam("role_id") Long role_id) {
+        UserDto user = adminUserService.getUserById(user_id);
         if(role_id ==0){
             return new ModelAndView("redirect:/admin/users/details/" + user_id);
         }
@@ -66,6 +67,7 @@ public class AdminUsersManageController {
     @PostMapping("/assignRestaurant/{user_id}")
     public ModelAndView assignRestaurant(@PathVariable("user_id") Long user_id,
                                    @RequestParam("restaurant_id") Long restaurant_id) {
+        UserDto user = adminUserService.getUserById(user_id);
         if(restaurant_id ==0){
             return new ModelAndView("redirect:/admin/users/details/" + user_id);
         }
@@ -91,7 +93,6 @@ public class AdminUsersManageController {
     @PostMapping("/findByEmail")
     public ModelAndView findByEmail(@RequestParam("email") String email) {
         Long userId = adminUserService.getUserByEmail(email);
-
         return new ModelAndView("redirect:/admin/users/details/" + userId);
     }
 }

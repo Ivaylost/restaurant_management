@@ -43,7 +43,6 @@ public class HomeController {
                                             CreateAllReservationsDateBindingModel createAllReservationsDateBindingModel,
             @PathVariable("restaurantId") Long restaurantId
     ){
-        List<RestaurantViewDetails> allRestaurants = restaurantService.getAllRestaurants();
         String restaurantName = restaurantService.getRestaurantName(restaurantId);
         ModelAndView view = new ModelAndView("create-reservation");
         view.addObject("restaurantId", restaurantId);

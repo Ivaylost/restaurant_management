@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.service.impl;
 
+import bg.softuni.restaurants_management.error.ObjectNotFoundException;
 import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
 import bg.softuni.restaurants_management.model.dto.UserRegistrationBindingModel;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
@@ -24,7 +25,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserEntity> findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+
+        Optional<UserEntity> byEmail = userRepository.findByEmail(email);
+        if (byEmail.isEmpty()){
+            throw new ObjectNotFoundException("User not found");
+        }
+        return byEmail;
     }
 
     @Override
