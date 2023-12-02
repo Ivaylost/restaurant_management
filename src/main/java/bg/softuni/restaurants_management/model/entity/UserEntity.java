@@ -14,6 +14,26 @@ public class UserEntity extends BaseEntity {
     private String password;
     private String firstName;
     private String lastName;
+    private Boolean isActive;
+    private String registrationToken;
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public UserEntity setActive(Boolean active) {
+        isActive = active;
+        return this;
+    }
+
+    public String getRegistrationToken() {
+        return registrationToken;
+    }
+
+    public UserEntity setRegistrationToken(String registrationToken) {
+        this.registrationToken = registrationToken;
+        return this;
+    }
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles = new ArrayList<>();

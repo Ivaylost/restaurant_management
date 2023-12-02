@@ -15,7 +15,7 @@ public class ScheduleConfig {
     }
 
 //    @Scheduled(cron = "0 * * * * *") for executing every minute
-@Scheduled(cron = "0 0 0 * * *",zone = "CET")
+@Scheduled(cron = "0 0 0 * * *",zone = "UTC")
     public void executeAtMidnight() {
 
         long dateOfCreationOfNewReservations = 5L;

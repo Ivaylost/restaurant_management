@@ -5,10 +5,7 @@ import bg.softuni.restaurants_management.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -26,6 +23,14 @@ public class UserRegistrationController {
             @ModelAttribute("userRegistrationBindingModel") UserRegistrationBindingModel userRegistrationBindingModel
     ){
         return new ModelAndView("auth-register");
+    }
+
+    @GetMapping("/verify")
+    public ModelAndView verify(
+            @RequestParam String token
+    ){
+        userService.verifyUser(token);
+        return new ModelAndView("redirect:/users/login");
     }
 
     @PostMapping("/register")

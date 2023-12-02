@@ -13,4 +13,6 @@ public interface UserService {
     boolean registerUser(UserRegistrationBindingModel userRegistrationBindingModel);
 
     List<RestaurantViewDetails> getUsersRestaurants(UserEntity loggedUser);
+
+    void verifyUser(String token);
 }

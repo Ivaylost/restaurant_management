@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfiguration {
@@ -31,6 +33,7 @@ public class SecurityConfiguration {
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
                         .requestMatchers("/admin/**").hasRole(RoleEnums.ADMIN.name())
                         .requestMatchers("/manage/**").hasRole(RoleEnums.MANAGER.name())
+                        .requestMatchers("/userReservation/**", "/makeReservation/**").hasAnyRole(RoleEnums.ADMIN.name(), RoleEnums.MANAGER.name(), RoleEnums.USER.name())
                         .anyRequest().permitAll()
         ).formLogin(
                 formLogin -> {

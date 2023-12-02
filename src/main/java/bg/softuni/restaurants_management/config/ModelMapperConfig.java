@@ -32,7 +32,7 @@ public class ModelMapperConfig {
         final ModelMapper modelMapper = new ModelMapper();
 
         Provider<UserEntity> newUserProvider = req -> new UserEntity()
-                .setRoles(List.of(roleRepository.findByRole(RoleEnums.USER)));
+                .setActive(false);
 
         Converter<String, String> passwordConverter
                 = ctx -> (ctx.getSource() == null)
