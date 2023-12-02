@@ -4,6 +4,7 @@ import bg.softuni.restaurants_management.model.enums.ReservationEnums;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "reservations")
@@ -55,5 +56,18 @@ public class Reservation extends BaseEntity{
     public Reservation setUser(UserEntity user) {
         this.user = user;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return reservations == that.reservations && Objects.equals(date, that.date) && Objects.equals(table.getId(), that.table.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(reservations, date, table);
     }
 }
