@@ -77,13 +77,10 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     @Transactional
     public void makeReservation(Long reservationId, String userEmail) {
-        Optional<Reservation> reservation = reservationRepository.findById(reservationId);
-        Optional<UserEntity> userByEmail = userService.findUserByEmail(userEmail);
-
-        if (reservation.isEmpty() || userByEmail.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found!");
-        }
-        Reservation updatedReservation = reservation.get().setUser(userByEmail.get());
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+        UserEntity userByEmail = userService.findUserByEmail(userEmail);
+        Reservation updatedReservation = reservation.setUser(userByEmail);
         reservationRepository.save(updatedReservation);
 
     }

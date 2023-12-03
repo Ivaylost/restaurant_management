@@ -103,35 +103,26 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public void delete(Long id) throws IOException {
-        Optional<Restaurant> restaurant = restaurantRepository.findById(id);
-
-        if (restaurant.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found!");
-        }
-        imageService.delete(restaurant.get());
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+        imageService.delete(restaurant);
         restaurantRepository.deleteById(id);
     }
 
     @Override
     @Transactional
     public void updateRestaurantsWithTable(TableCreateBindingModel tableCreateBindingModel) {
-        Optional<Restaurant> restaurant = restaurantRepository.findById(tableCreateBindingModel.getRestaurantId());
-        if (restaurant.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found!");
-        }
-        Restaurant restaurantToUpdate = restaurant.get();
-        TableEntity table = new TableEntity().setName(tableCreateBindingModel.getName()).setRestaurant(restaurantToUpdate);
-        restaurantToUpdate.getTableEntities().add(table);
-        restaurantRepository.save(restaurantToUpdate);
+        Restaurant restaurant = restaurantRepository.findById(tableCreateBindingModel.getRestaurantId())
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+        TableEntity table = new TableEntity().setName(tableCreateBindingModel.getName()).setRestaurant(restaurant);
+        restaurant.getTableEntities().add(table);
+        restaurantRepository.save(restaurant);
     }
 
     @Override
     public String getRestaurantName(Long restaurantId) {
-        Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(restaurantId);
-        if (optionalRestaurant.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found!");
-        }
-
-        return optionalRestaurant.get().getName();
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+        return restaurant.getName();
     }
 }

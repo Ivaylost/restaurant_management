@@ -76,7 +76,6 @@ public class HomeController {
     private UserEntity getLoggedUser(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        Optional<UserEntity> optionalUser = userService.findUserByEmail(email);
-        return optionalUser.orElse(null);
+        return userService.findUserByEmail(email);
     }
 }

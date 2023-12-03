@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    Optional<UserEntity> findUserByEmail(String email);
+    UserEntity findUserByEmail(String email);
 
     boolean registerUser(UserRegistrationBindingModel userRegistrationBindingModel);
 

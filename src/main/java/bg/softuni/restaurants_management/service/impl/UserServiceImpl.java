@@ -34,13 +34,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserEntity> findUserByEmail(String email) {
+    public UserEntity findUserByEmail(String email) {
 
-        Optional<UserEntity> byEmail = userRepository.findByEmail(email);
-        if (byEmail.isEmpty()){
-            throw new ObjectNotFoundException("User not found");
-        }
-        return byEmail;
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
     }
 
     @Override

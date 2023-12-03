@@ -107,18 +107,10 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     @Transactional
     public void unassignRestaurant(Long userId, Long restaurantId) {
-        Optional<UserEntity> optionalUser = userRepository.findById(userId);
-
-        if (optionalUser.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found!");
-        }
-        UserEntity userEntity = optionalUser.get();
-        Optional<Restaurant> optionalRestaurant = restaurantRepository.findById(restaurantId);
-
-        if (optionalRestaurant.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found!");
-        }
-        Restaurant restaurant = optionalRestaurant.get();
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+        Restaurant restaurant = restaurantRepository.findById(restaurantId)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
         userEntity.getRestaurants().remove(restaurant);
         userRepository.save(userEntity);
     }
@@ -127,14 +119,11 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     @Transactional
     public void removeRole(Long userId, Long roleId) {
-        Optional<UserEntity> optionalUser = userRepository.findById(userId);
-        Optional<Role> optionalRole = roleRepository.findById(roleId);
-        if (optionalUser.isEmpty() || optionalRole.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found!");
-        }
-        UserEntity userEntity = optionalUser.get();
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
 
-        Role role = optionalRole.get();
         userEntity.getRoles().remove(role);
 
         if (role.getRole() == RoleEnums.MANAGER) {
@@ -147,14 +136,10 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     @Transactional
     public void assignRole(Long userId, Long roleId) {
-        Optional<UserEntity> optionalUser = userRepository.findById(userId);
-        Optional<Role> optionalRole = roleRepository.findById(roleId);
-        if (optionalUser.isEmpty() || optionalRole.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found");
-        }
-        UserEntity userEntity = optionalUser.get();
-
-        Role role = optionalRole.get();
+        UserEntity userEntity = userRepository.findById(userId)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+        Role role = roleRepository.findById(roleId)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
 
         if (!userEntity.getRoles().contains(role)) {
             userEntity.getRoles().add(role);
@@ -164,11 +149,9 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public Long getUserByEmail(String email) {
-        Optional<UserEntity> optionalUser = userRepository.findByEmail(email);
-        if (optionalUser.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found");
-        }
-        return optionalUser.<Long>map(UserEntity::getId).orElse(null);
+        UserEntity userEntity = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+        return userEntity.getId();
     }
 
     private List<Role> getAllRoles() {

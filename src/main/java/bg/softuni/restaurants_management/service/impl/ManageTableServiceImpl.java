@@ -33,10 +33,8 @@ public class ManageTableServiceImpl implements ManageTableService {
 
     @Override
     public void removeTable(Long tableId) {
-        Optional<TableEntity> optionalTableEntity = tableRepository.findById(tableId);
-        if (optionalTableEntity.isEmpty()) {
-            throw new ObjectNotFoundException("Object not found!");
-        }
-            tableRepository.delete(optionalTableEntity.get());
+        TableEntity tableEntity = tableRepository.findById(tableId)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+            tableRepository.delete(tableEntity);
     }
 }
