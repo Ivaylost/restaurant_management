@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.service.impl;
 
+import bg.softuni.restaurants_management.Helpers;
 import bg.softuni.restaurants_management.model.entity.Role;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
 import bg.softuni.restaurants_management.model.enums.RoleEnums;
@@ -42,7 +43,7 @@ public class RestaurantsManagementUserDetailsServiceTest {
     @Test
     public void testUserFoundException(){
         //Arrange
-        UserEntity userEntity = createTestUser();
+        UserEntity userEntity = Helpers.createTestUser();
         when(mockUserRepository.findByEmail(userEntity.getEmail()))
                 .thenReturn(Optional.of(userEntity));
 
@@ -54,28 +55,11 @@ public class RestaurantsManagementUserDetailsServiceTest {
         Assertions.assertEquals(userEntity.getEmail(), userDetails.getUsername());
         Assertions.assertEquals(userEntity.getPassword(), userDetails.getPassword());
         Assertions.assertEquals(2, userDetails.getAuthorities().size());
-        Assertions.assertTrue(containsAuthority(userDetails, "ROLE_" + RoleEnums.ADMIN.name()));
-        Assertions.assertTrue(containsAuthority(userDetails, "ROLE_" + RoleEnums.MANAGER.name()));
+        Assertions.assertTrue(Helpers.containsAuthority(userDetails, "ROLE_" + RoleEnums.ADMIN.name()));
+        Assertions.assertTrue(Helpers.containsAuthority(userDetails, "ROLE_" + RoleEnums.MANAGER.name()));
     }
 
-    private static UserEntity createTestUser(){
 
-        Role roleAdmin = new Role().setRole(RoleEnums.ADMIN);
-        Role roleManager = new Role().setRole(RoleEnums.MANAGER);
 
-        return new UserEntity()
-                .setFirstName("first")
-                .setLastName("last")
-                .setActive(false)
-                .setEmail("test@test.com")
-                .setRoles(List.of(roleAdmin, roleManager))
-                .setPassword("password");
-    }
 
-    private boolean containsAuthority(UserDetails userDetails, String expectedAuthority){
-        return userDetails
-                .getAuthorities()
-                .stream()
-                .anyMatch(a -> expectedAuthority.equals(a.getAuthority()));
-    }
 }

@@ -30,6 +30,7 @@ public class SecurityConfiguration {
                 authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         .requestMatchers("/statics/**").permitAll()
+                        .requestMatchers("/coordinates/**").permitAll()
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
                         .requestMatchers("/admin/**").hasRole(RoleEnums.ADMIN.name())
                         .requestMatchers("/manage/**").hasRole(RoleEnums.MANAGER.name())

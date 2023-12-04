@@ -1,9 +1,6 @@
 package bg.softuni.restaurants_management.service;
 
-import bg.softuni.restaurants_management.model.dto.RestaurantCreateBindingModel;
-import bg.softuni.restaurants_management.model.dto.RestaurantUpdateBindingModel;
-import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
-import bg.softuni.restaurants_management.model.dto.TableCreateBindingModel;
+import bg.softuni.restaurants_management.model.dto.*;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import org.springframework.stereotype.Service;
 
@@ -28,5 +25,6 @@ public interface RestaurantService {
 
     String getRestaurantName(Long restaurantId);
 
+    List<Double> getCoordinates(Long id);
 }
 

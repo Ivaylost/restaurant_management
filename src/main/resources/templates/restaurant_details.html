@@ -42,6 +42,8 @@
                            th:field="*{imgUrl}"/>
                 </div>
             </div>
+            <input type="hidden" class="form-control" id="rest_id"
+                   th:field="*{id}"/>
         </fieldset>
     </form>
     <h3 class="text-center text-dark">Our Location</h3>
@@ -54,18 +56,24 @@
         <footer></footer>
     </div>
     <script>
-        console.log(document.getElementById("lat").value)
-        console.log(document.getElementById("lon").value)
-        mapboxgl.accessToken = 'pk.eyJ1IjoiZ29zcG9kaW5vdmdhbGluOTYiLCJhIjoiY2xudXd0enliMGd6MjJpbnM5YnE0dGNnNCJ9.7kxRpuM2zse_V7LEAqGf-A';
-        const map = new mapboxgl.Map({
-            container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v12', // style URL
-            center: [document.getElementById("lon").value, document.getElementById("lat").value], // starting position [lng, lat]
-            zoom: 15
-        });
-        const marker = new mapboxgl.Marker()
-            .setLngLat([document.getElementById("lon").value, document.getElementById("lat").value])
-            .addTo(map);
+        let coordinates;
+        const id = document.getElementById('rest_id').value
+        fetch(`http://localhost:8080/coordinates/${id}`)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res)
+                coordinates = res;
+                mapboxgl.accessToken = 'pk.eyJ1IjoiZ29zcG9kaW5vdmdhbGluOTYiLCJhIjoiY2xudXd0enliMGd6MjJpbnM5YnE0dGNnNCJ9.7kxRpuM2zse_V7LEAqGf-A';
+                const map = new mapboxgl.Map({
+                    container: 'map',
+                    style: 'mapbox://styles/mapbox/streets-v12', // style URL
+                    center: res, // starting position [lng, lat]
+                    zoom: 15
+                });
+                const marker = new mapboxgl.Marker()
+                    .setLngLat(res)
+                    .addTo(map);
+            });
     </script>
 </div>
 </body>

@@ -1,10 +1,7 @@
 package bg.softuni.restaurants_management.service.impl;
 
 import bg.softuni.restaurants_management.error.ObjectNotFoundException;
-import bg.softuni.restaurants_management.model.dto.RestaurantCreateBindingModel;
-import bg.softuni.restaurants_management.model.dto.RestaurantUpdateBindingModel;
-import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
-import bg.softuni.restaurants_management.model.dto.TableCreateBindingModel;
+import bg.softuni.restaurants_management.model.dto.*;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.TableEntity;
 import bg.softuni.restaurants_management.repository.RestaurantRepository;
@@ -15,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -124,5 +122,16 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant restaurant = restaurantRepository.findById(restaurantId)
                 .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
         return restaurant.getName();
+    }
+
+    @Override
+    public List<Double> getCoordinates(Long id) {
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new ObjectNotFoundException("Object not found!"));
+        List<Double> coordinates = new ArrayList<>();
+        coordinates.add(restaurant.getLon());
+        coordinates.add(restaurant.getLat());
+
+        return coordinates;
     }
 }
