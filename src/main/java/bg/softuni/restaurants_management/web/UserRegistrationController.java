@@ -1,6 +1,7 @@
 package bg.softuni.restaurants_management.web;
 
 import bg.softuni.restaurants_management.model.dto.UserRegistrationBindingModel;
+import bg.softuni.restaurants_management.model.entity.UserEntity;
 import bg.softuni.restaurants_management.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -43,9 +44,9 @@ public class UserRegistrationController {
             return new ModelAndView("auth-register");
         }
 
-        boolean hasSuccessfulRegistration = userService.registerUser(userRegistrationBindingModel);
+        UserEntity user = userService.registerUser(userRegistrationBindingModel);
 
-        if (!hasSuccessfulRegistration) {
+        if (user.getId() == null && user.getId()>0) {
             ModelAndView modelAndView = new ModelAndView("auth-register");
             modelAndView.addObject("hasRegistrationError", true);
             return modelAndView;

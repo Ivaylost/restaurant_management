@@ -56,6 +56,14 @@ public class UserServiceImplTest {
     }
 
     @Test
+    public void testVerifyUserThrowObjectNotFoundException() {
+        Assertions.assertThrows(
+                ObjectNotFoundException.class,
+                () -> serviceToTest.verifyUser("")
+        );
+    }
+
+    @Test
     public void testFindUserByEmailReturnUser() {
         UserEntity userEntity = Helpers.createTestUser();
         when(mockUserRepository.findByEmail(userEntity.getEmail()))
@@ -70,28 +78,5 @@ public class UserServiceImplTest {
         Assertions.assertEquals(user.getActive(), userEntity.getActive());
         Assertions.assertEquals(user.getFirstName(), userEntity.getFirstName());
         Assertions.assertEquals(user.getLastName(), userEntity.getLastName());
-    }
-
-    @Test
-    public void testGetUsersRestaurants() {
-        UserEntity testUser = new UserEntity()
-                .setFirstName("first")
-                .setLastName("last")
-                .setActive(false)
-                .setEmail("test@test.com")
-                .setPassword("password");
-        String restaurantName = "restaurant";
-        Restaurant restaurant = new Restaurant().setName("restaurant");
-        testUser.getRestaurants().add(restaurant);
-        RestaurantViewDetails restaurantViewDetails = new RestaurantViewDetails().setName(restaurantName);
-
-        when(modelMapper.map(testUser, RestaurantViewDetails.class))
-                .thenReturn(restaurantViewDetails);
-
-        List<RestaurantViewDetails> usersRestaurants = serviceToTest.getUsersRestaurants(testUser);
-
-        Assertions.assertEquals(1, usersRestaurants.size());
-        Assertions.assertEquals(restaurantName, usersRestaurants.get(0).getName());
-
     }
 }

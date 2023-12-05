@@ -9,18 +9,21 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.List;
 
 public class Helpers {
-    public static UserEntity createTestUser(){
+    public static UserEntity createTestUser() {
 
+        Role roleAdmin = new Role().setRole(RoleEnums.ADMIN);
+        Role roleManager = new Role().setRole(RoleEnums.MANAGER);
 
         return new UserEntity()
                 .setFirstName("first")
                 .setLastName("last")
                 .setActive(false)
                 .setEmail("test@test.com")
-                .setPassword("password");
+                .setPassword("password")
+                .setRoles(List.of(roleAdmin, roleManager));
     }
 
-    public static boolean containsAuthority(UserDetails userDetails, String expectedAuthority){
+    public static boolean containsAuthority(UserDetails userDetails, String expectedAuthority) {
         return userDetails
                 .getAuthorities()
                 .stream()

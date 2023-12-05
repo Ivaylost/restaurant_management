@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface UserService {
     UserEntity findUserByEmail(String email);
 
-    boolean registerUser(UserRegistrationBindingModel userRegistrationBindingModel);
+    UserEntity registerUser(UserRegistrationBindingModel userRegistrationBindingModel);
 
     List<RestaurantViewDetails> getUsersRestaurants(UserEntity loggedUser);
 

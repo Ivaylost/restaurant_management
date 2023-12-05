@@ -1,24 +1,26 @@
 package bg.softuni.restaurants_management.service.impl;
 
-import bg.softuni.restaurants_management.Helpers;
+import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
+import bg.softuni.restaurants_management.model.dto.UserRegistrationBindingModel;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
 import bg.softuni.restaurants_management.repository.RestaurantRepository;
 import bg.softuni.restaurants_management.repository.RoleRepository;
 import bg.softuni.restaurants_management.repository.UserRepository;
 import bg.softuni.restaurants_management.service.EventPublisherInterface;
-import bg.softuni.restaurants_management.service.RestaurantService;
+import bg.softuni.restaurants_management.service.UserService;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationEventPublisher;
 
 import java.util.List;
 import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class UserServiceImplIT {
@@ -32,6 +34,10 @@ public class UserServiceImplIT {
     private RoleRepository roleRepository;
     @Autowired
     private RestaurantRepository restaurantRepository;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private ApplicationEventPublisher applicationEventPublisher;
 
     @BeforeEach
     void setUp() {
@@ -62,12 +68,70 @@ public class UserServiceImplIT {
     @Test
     void testFindUserByEmail() {
         String email = "test@test.com";
-        Optional<UserEntity> byEmail = userRepository.findByEmail(email);
-        Assertions.assertTrue(byEmail.isPresent());
-        UserEntity userEntity = byEmail.get();
-        Assertions.assertEquals("first", userEntity.getFirstName());
-        Assertions.assertEquals("last", userEntity.getLastName());
-        Assertions.assertEquals("test@test.com", userEntity.getEmail());
-        Assertions.assertEquals(false, userEntity.getActive());
+        UserEntity userByEmail = userService.findUserByEmail(email);
+        assertEquals("first", userByEmail.getFirstName());
+        assertEquals("last", userByEmail.getLastName());
+        assertEquals("test@test.com", userByEmail.getEmail());
+        assertEquals(false, userByEmail.getActive());
     }
+
+    @Test
+    void testRegisterUser(){
+        UserRegistrationBindingModel userBindingModel = new UserRegistrationBindingModel().setFirstName("Test")
+                .setLastName("User")
+                .setEmail("test@user.com")
+                .setPassword("password");
+
+        UserEntity userEntity = userService.registerUser(userBindingModel);
+
+        assertEquals(userBindingModel.getFirstName(), userEntity.getFirstName());
+        assertEquals(userBindingModel.getLastName(), userEntity.getLastName());
+        assertEquals(userBindingModel.getEmail(), userEntity.getEmail());
+    }
+
+    @Test
+    void testGetUsersRestaurants(){
+
+        UserEntity userByEmail = userService.findUserByEmail("test@test.com");
+
+        List<RestaurantViewDetails> usersRestaurants = userService.getUsersRestaurants(userByEmail);
+
+        assertEquals(1, usersRestaurants.size());
+        boolean result = usersRestaurants.stream()
+                .map(RestaurantViewDetails::getName)
+                .anyMatch("restaurant"::equals);
+        assertTrue(result);
+        assertInstanceOf(RestaurantViewDetails.class, usersRestaurants.get(0));
+    }
+
+    @Test
+    void testVerifyUser(){
+
+        UserRegistrationBindingModel userBindingModel = new UserRegistrationBindingModel().setFirstName("Test")
+                .setLastName("User")
+                .setEmail("test@user.com")
+                .setPassword("password");
+
+        UserEntity userEntity = userService.registerUser(userBindingModel);
+
+        String registrationToken = userEntity.getRegistrationToken();
+
+        userService.verifyUser(registrationToken);
+        Optional<UserEntity> byEmail = userRepository.findByEmail(userEntity.getEmail());
+        assertTrue(byEmail.isPresent());
+        assertTrue(byEmail.get().getActive());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

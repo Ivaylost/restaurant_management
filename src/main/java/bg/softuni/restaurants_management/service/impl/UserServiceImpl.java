@@ -41,14 +41,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean registerUser(UserRegistrationBindingModel userRegistrationBindingModel) {
+    public UserEntity registerUser(UserRegistrationBindingModel userRegistrationBindingModel) {
         UserEntity user = modelMapper.map(userRegistrationBindingModel, UserEntity.class);
-        String registrationToken = UUID.randomUUID().toString();
+        String registrationToken = tokenProvider();
         user.setRegistrationToken(registrationToken);
-        userRepository.save(user);
+        UserEntity saved = userRepository.save(user);
         String registrationLink = "http://localhost:8080/users/verify?token=" + user.getRegistrationToken();
         eventPublisher.publishUserRegistrationEvent(registrationLink);
-        return true;
+        return saved;
     }
 
     @Override
@@ -70,5 +70,9 @@ public class UserServiceImpl implements UserService {
         userEntity.getRoles().add((roleRepository.findByRole(RoleEnums.USER)));
         userEntity.setActive(true);
         userRepository.save(optionalUser.get().setActive(true));
+    }
+
+    private String tokenProvider (){
+        return UUID.randomUUID().toString();
     }
 }
