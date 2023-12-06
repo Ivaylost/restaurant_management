@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -34,7 +35,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         Restaurant restaurant = modelMapper.map(restaurantCreateBindingModel, Restaurant.class);
         restaurant.setActive(false);
         Restaurant savedRestaurant = restaurantRepository.save(restaurant);
-        String[] suffix = restaurantCreateBindingModel.getFile().getOriginalFilename().split("\\.");
+        String[] suffix = Objects.requireNonNull(restaurantCreateBindingModel.getFile().getOriginalFilename()).split("\\.");
         String pathToSaveImage = "src\\main\\resources\\static\\images\\Restaurant_" + savedRestaurant.getId()
                 + "\\primaryImage." + suffix[1];
         String pathToSaveInRestaurant = "\\images\\Restaurant_" + savedRestaurant.getId()
@@ -70,8 +71,7 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantRepository.findAllBy()
                 .stream()
                 .map(restaurant ->
-                        modelMapper.map(restaurant, RestaurantViewDetails.class)
-                )
+                        modelMapper.map(restaurant, RestaurantViewDetails.class))
                 .toList();
     }
 

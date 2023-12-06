@@ -2,12 +2,11 @@ package bg.softuni.restaurants_management.service.impl;
 
 import bg.softuni.restaurants_management.Helpers;
 import bg.softuni.restaurants_management.error.ObjectNotFoundException;
-import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
-import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
 import bg.softuni.restaurants_management.repository.RoleRepository;
 import bg.softuni.restaurants_management.repository.UserRepository;
 import bg.softuni.restaurants_management.service.EventPublisherInterface;
+import bg.softuni.restaurants_management.service.TokenProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,9 +14,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -32,6 +29,8 @@ public class UserServiceImplTest {
     private EventPublisherInterface mockEventPublisher;
     @Mock
     private RoleRepository mockRoleRepository;
+    @Mock
+    private TokenProvider tokenProvider;
 
     private ModelMapper modelMapper;
 
@@ -41,8 +40,8 @@ public class UserServiceImplTest {
                 mockUserRepository,
                 modelMapper,
                 mockEventPublisher,
-                mockRoleRepository
-        );
+                mockRoleRepository,
+                tokenProvider);
 
         this.modelMapper = new ModelMapper();
     }

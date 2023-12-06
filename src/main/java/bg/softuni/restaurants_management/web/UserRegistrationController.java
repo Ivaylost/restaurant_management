@@ -46,12 +46,6 @@ public class UserRegistrationController {
 
         UserEntity user = userService.registerUser(userRegistrationBindingModel);
 
-        if (user.getId() == null && user.getId()>0) {
-            ModelAndView modelAndView = new ModelAndView("auth-register");
-            modelAndView.addObject("hasRegistrationError", true);
-            return modelAndView;
-        }
-
         return new ModelAndView("redirect:/users/login");
     }
 }

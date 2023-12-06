@@ -12,6 +12,9 @@ import bg.softuni.restaurants_management.service.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,21 +26,14 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class UserServiceImplIT {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private ModelMapper modelMapper;
-    @Autowired
-    private EventPublisherInterface eventPublisher;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
     private RestaurantRepository restaurantRepository;
     @Autowired
     private UserService userService;
-    @Autowired
-    private ApplicationEventPublisher applicationEventPublisher;
 
     @BeforeEach
     void setUp() {
@@ -121,17 +117,4 @@ public class UserServiceImplIT {
         assertTrue(byEmail.isPresent());
         assertTrue(byEmail.get().getActive());
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
