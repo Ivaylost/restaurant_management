@@ -17,12 +17,6 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto col-12 justify-content-between">
                 <li class="nav-item">
-                    <a class="nav-link" href="/home">RESTAURANTS</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/">MENUS</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/">GET IN TOUCH</a>
                 </li>
                 <li class="nav-item dropdown" sec:authorize="hasRole('MANAGER')">
@@ -45,16 +39,6 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" th:href="@{/admin/users/all}">All users</a>
                         <a class="dropdown-item" th:href="@{/admin/users/findByEmail}">Find user by email</a>
-                    </div>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/" id="waiterDropdown" role="button"
-                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Waiter</a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="/">Action</a>
-                        <a class="dropdown-item" href="/">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/">Something else here</a>
                     </div>
                 </li>
                 <li class="nav-item" sec:authorize="!isAuthenticated()">

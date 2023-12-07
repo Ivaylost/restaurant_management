@@ -1,16 +1,11 @@
 package bg.softuni.restaurants_management.init;
 
-import bg.softuni.restaurants_management.model.entity.ReservationSlot;
-import bg.softuni.restaurants_management.model.entity.Restaurant;
-import bg.softuni.restaurants_management.model.entity.Role;
-import bg.softuni.restaurants_management.model.entity.UserEntity;
+import bg.softuni.restaurants_management.model.entity.*;
 import bg.softuni.restaurants_management.model.enums.ReservationEnums;
 import bg.softuni.restaurants_management.model.enums.RoleEnums;
-import bg.softuni.restaurants_management.repository.ReservationSlotRepository;
-import bg.softuni.restaurants_management.repository.RestaurantRepository;
-import bg.softuni.restaurants_management.repository.RoleRepository;
-import bg.softuni.restaurants_management.repository.UserRepository;
+import bg.softuni.restaurants_management.repository.*;
 import bg.softuni.restaurants_management.service.ImageService;
+import bg.softuni.restaurants_management.service.ReservationService;
 import bg.softuni.restaurants_management.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -23,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +37,8 @@ public class InitialInit implements CommandLineRunner {
     private final RestaurantRepository restaurantRepository;
     private final ImageService imageService;
     private final ResourceLoader resourceLoader;
+    private final TableRepository tableRepository;
+    private final ReservationService reservationService;
 
 
     public InitialInit(RestaurantService restaurantService, @Value("${restaurants_management.default.admin.pass}") String defaultAdminPass,
@@ -48,7 +47,10 @@ public class InitialInit implements CommandLineRunner {
                        PasswordEncoder passwordEncoder,
                        ReservationSlotRepository reservationSlotRepository,
                        RestaurantRepository restaurantRepository,
-                       ImageService imageService, ResourceLoader resourceLoader) {
+                       ImageService imageService,
+                       ResourceLoader resourceLoader,
+                       TableRepository tableRepository,
+                       ReservationService reservationService) {
         this.restaurantService = restaurantService;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
@@ -58,6 +60,8 @@ public class InitialInit implements CommandLineRunner {
         this.restaurantRepository = restaurantRepository;
         this.imageService = imageService;
         this.resourceLoader = resourceLoader;
+        this.tableRepository = tableRepository;
+        this.reservationService = reservationService;
     }
 
     @Override
@@ -100,11 +104,17 @@ public class InitialInit implements CommandLineRunner {
         }
 
         if (restaurantCount == 0) {
+
+
+
             Restaurant restaurant = new Restaurant().setName("Brother's restaurant")
                     .setLon(23.31891732089949D)
                     .setLat(42.684754219143535D)
                     .setActive(true);
             Restaurant saved = restaurantRepository.save(restaurant);
+            TableEntity table = new TableEntity().setName("T1").setRestaurant(saved);
+            TableEntity savedTable = tableRepository.save(table);
+            reservationService.createReservationForActiveRestaurantsForDate(LocalDate.now());
 
             Resource resource = resourceLoader.getResource("classpath:static/img/bar.jpg");
             InputStream inputStream = resource.getInputStream();
@@ -120,6 +130,9 @@ public class InitialInit implements CommandLineRunner {
 
             imageService.saveImageIntoFileSystem(multipartFile, pathToSaveImage);
             restaurantService.updateImgUrl(saved, pathToSaveInRestaurant);
+
+
+
         }
     }
 }
