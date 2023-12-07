@@ -29,7 +29,7 @@
                 <tbody>
                 <tr th:each="restaurant: ${allRestaurants}">
                     <td>
-                        <a th:text="*{restaurant.name}"></a>
+                        <a th:href="@{/admin/restaurants/details/{restaurant_id}(restaurant_id=*{restaurant.id})}" th:text="*{restaurant.name}"></a>
                     </td>
                     <td >
                         <form sec:authorize="isAuthenticated()"
