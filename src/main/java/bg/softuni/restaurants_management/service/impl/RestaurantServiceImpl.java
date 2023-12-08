@@ -134,4 +134,13 @@ public class RestaurantServiceImpl implements RestaurantService {
 
         return coordinates;
     }
+
+    @Override
+    public List<RestaurantViewDetails> getAllActiveRestaurants() {
+        return restaurantRepository.findAllByIsActiveIs(true)
+                .stream()
+                .map(restaurant ->
+                        modelMapper.map(restaurant, RestaurantViewDetails.class))
+                .toList();
+    }
 }

@@ -6,6 +6,7 @@ import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
 import bg.softuni.restaurants_management.model.dto.TableCreateBindingModel;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.TableEntity;
+import bg.softuni.restaurants_management.repository.ReservationRepository;
 import bg.softuni.restaurants_management.repository.RestaurantRepository;
 import bg.softuni.restaurants_management.repository.TableRepository;
 import bg.softuni.restaurants_management.service.ImageService;
@@ -38,12 +39,16 @@ public class RestaurantServiceImplIT {
 
     @Autowired
     private TableRepository tableRepository;
+    @Autowired
+    private ReservationRepository reservationRepository;
 
     @Value("restaurant")
     private String restaurantName;
 
     @BeforeEach
     void setUp() {
+        reservationRepository.deleteAll();
+        tableRepository.deleteAll();
         restaurantRepository.deleteAll();
         TableEntity table = new TableEntity().setName("Test");
         Restaurant restaurant = new Restaurant().setName(restaurantName)
@@ -57,6 +62,8 @@ public class RestaurantServiceImplIT {
 
     @AfterEach
     void tearDown() {
+        reservationRepository.deleteAll();
+        tableRepository.deleteAll();
         restaurantRepository.deleteAll();
     }
 
@@ -146,10 +153,6 @@ public class RestaurantServiceImplIT {
         assertThrows(
                 ObjectNotFoundException.class,
                 () -> restaurantService.updateRestaurantsWithTable(tableBindingModel));
-
-       // Restaurant updatedRestaurant = restaurantRepository.findById(1L).orElseThrow();
-        //List<Restaurant> all = restaurantRepository.findAll();
-        //List<TableEntity> all1 = tableRepository.findAll();
     }
 
     @Test
@@ -185,5 +188,21 @@ public class RestaurantServiceImplIT {
         assertThrows(
                 ObjectNotFoundException.class,
                 () -> restaurantService.getCoordinates(100L));
+    }
+
+    @Test
+    void testGetAllActiveRestaurants(){
+        Restaurant restaurant = new Restaurant().setName("secondRestaurant")
+                .setImgUrl("url")
+                .setActive(true)
+                .setLat(20D)
+                .setLon(30D);
+        restaurantRepository.save(restaurant);
+        List<RestaurantViewDetails> allRestaurants = restaurantService.getAllRestaurants();
+        List<RestaurantViewDetails> allActiveRestaurants = restaurantService.getAllActiveRestaurants();
+        assertEquals(2, allRestaurants.size());
+        assertEquals(1, allActiveRestaurants.size());
+        assertEquals(restaurant.getName(), allActiveRestaurants.get(0).getName());
+        assertInstanceOf(RestaurantViewDetails.class, allActiveRestaurants.get(0));
     }
 }

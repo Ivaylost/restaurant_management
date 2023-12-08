@@ -26,5 +26,7 @@ public interface RestaurantService {
     String getRestaurantName(Long restaurantId);
 
     List<Double> getCoordinates(Long id);
+
+    List<RestaurantViewDetails> getAllActiveRestaurants();
 }
 

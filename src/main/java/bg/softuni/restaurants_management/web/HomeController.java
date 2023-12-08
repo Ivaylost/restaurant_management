@@ -32,7 +32,7 @@ public class HomeController {
 
     @GetMapping("/")
     public ModelAndView index(){
-        List<RestaurantViewDetails> allRestaurants = restaurantService.getAllRestaurants();
+        List<RestaurantViewDetails> allRestaurants = restaurantService.getAllActiveRestaurants();
         ModelAndView view = new ModelAndView("index");
         view.addObject("allRestaurants", allRestaurants);
         return view;

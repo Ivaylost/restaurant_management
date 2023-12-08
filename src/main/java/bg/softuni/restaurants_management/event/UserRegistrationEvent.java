@@ -4,7 +4,7 @@ import org.springframework.context.ApplicationEvent;
 
 public class UserRegistrationEvent extends ApplicationEvent {
 
-    private String registrationLink;
+    private final String registrationLink;
 
     public UserRegistrationEvent(Object source, String registrationLink) {
         super(source);
