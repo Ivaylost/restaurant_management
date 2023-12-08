@@ -56,16 +56,6 @@ public class ReservationController {
         }
 
         reservationService.initReservationByRestaurant(createAllReservationsDateBindingModel);
-
-//        if (bindingResult.hasErrors()) {
-//            List<RestaurantViewDetails> restaurantViewDetailsList = userService.getUsersRestaurants(loggedUser);
-//            ModelAndView view = new ModelAndView("create-table");
-//            view.addObject("restaurantViewDetailsList", restaurantViewDetailsList);
-//            return view;
-//        }
-//
-//        manageTableService.createTable(tableCreateBindingModel);
-
         return new ModelAndView("redirect:/manage/tables/all");
     }
 

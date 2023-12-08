@@ -9,17 +9,17 @@ import bg.softuni.restaurants_management.service.ReservationService;
 import bg.softuni.restaurants_management.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +50,8 @@ public class InitialInit implements CommandLineRunner {
                        ImageService imageService,
                        ResourceLoader resourceLoader,
                        TableRepository tableRepository,
-                       ReservationService reservationService) {
+                       ReservationService reservationService
+                       ) {
         this.restaurantService = restaurantService;
         this.roleRepository = roleRepository;
         this.userRepository = userRepository;
@@ -104,9 +105,6 @@ public class InitialInit implements CommandLineRunner {
         }
 
         if (restaurantCount == 0) {
-
-
-
             Restaurant restaurant = new Restaurant().setName("Brother's restaurant")
                     .setLon(23.31891732089949D)
                     .setLat(42.684754219143535D)
@@ -130,9 +128,6 @@ public class InitialInit implements CommandLineRunner {
 
             imageService.saveImageIntoFileSystem(multipartFile, pathToSaveImage);
             restaurantService.updateImgUrl(saved, pathToSaveInRestaurant);
-
-
-
         }
     }
 }

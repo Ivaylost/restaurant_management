@@ -50,6 +50,15 @@ public class HomeController {
         return view;
     }
 
+    @GetMapping("myReservations")
+    public ModelAndView userReservation() {
+        UserEntity loggedUser = getLoggedUser();
+        List<ReservationViewModel> reservations = reservationService.getMyReservations(loggedUser);
+        ModelAndView view = new ModelAndView("my-reservations");
+        view.addObject("reservations", reservations);
+        return view;
+    }
+
     @PostMapping("/userReservation/{restaurantId}")
     public ModelAndView userReservation(
             @ModelAttribute("createAllReservationsDateBindingModel") @Valid CreateAllReservationsDateBindingModel createAllReservationsDateBindingModel,

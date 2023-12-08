@@ -109,6 +109,14 @@ public class ReservationServiceImpl implements ReservationService {
         return reservationsToSave.size();
     }
 
+    @Override
+    public List<ReservationViewModel> getMyReservations(UserEntity loggedUser) {
+        List<Reservation> allByUser = reservationRepository.findAllByUser(loggedUser);
+        return reservationRepository.findAllByUser(loggedUser).stream()
+                .map(view -> modelMapper.map(view, ReservationViewModel.class))
+                .toList();
+    }
+
     private List<Reservation> checkForReservation(LocalDate date) {
         return reservationRepository.findAllByDateIs(date).orElse(new ArrayList<>());
     }

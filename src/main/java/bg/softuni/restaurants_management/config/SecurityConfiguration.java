@@ -29,8 +29,7 @@ public class SecurityConfiguration {
         return httpSecurity.authorizeHttpRequests(
                 authorizeRequests -> authorizeRequests
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
-                        .requestMatchers("/statics/**").permitAll()
-                        .requestMatchers("/coordinates/**").permitAll()
+                        .requestMatchers("/statics/**","/coordinates/**", "/admin/restaurants/details/**").permitAll()
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
                         .requestMatchers("/admin/**").hasRole(RoleEnums.ADMIN.name())
                         .requestMatchers("/manage/**").hasRole(RoleEnums.MANAGER.name())

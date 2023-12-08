@@ -9,6 +9,16 @@ public class ReservationViewModel {
     private String tableName;
     private String restaurantName;
     private String reservationName;
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public ReservationViewModel setDate(String date) {
+        this.date = date;
+        return this;
+    }
 
     public Long getReservationId() {
         return reservationId;

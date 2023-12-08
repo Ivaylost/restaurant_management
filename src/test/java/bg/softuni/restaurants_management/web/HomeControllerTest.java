@@ -18,7 +18,7 @@ import bg.softuni.restaurants_management.service.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+//import org.junit.runner.RunWith;--------------------------
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
@@ -61,6 +61,8 @@ class HomeControllerTest {
 
     @BeforeEach
     void setUp() {
+        reservationRepository.deleteAll();
+        tableRepository.deleteAll();
         restaurantRepository.deleteAll();
         tableRepository.deleteAll();
         restaurantRepository.deleteAll();
@@ -68,6 +70,8 @@ class HomeControllerTest {
 
     @AfterEach
     void tearDown() {
+        reservationRepository.deleteAll();
+        tableRepository.deleteAll();
         restaurantRepository.deleteAll();
         tableRepository.deleteAll();
         reservationRepository.deleteAll();

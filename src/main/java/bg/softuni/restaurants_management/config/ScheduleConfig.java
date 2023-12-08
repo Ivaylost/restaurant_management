@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 
-//@Component
+@Component
 public class ScheduleConfig {
     private final ReservationService reservationService;
 
@@ -14,8 +14,8 @@ public class ScheduleConfig {
         this.reservationService = reservationService;
     }
 
-//    @Scheduled(cron = "0 * * * * *") for executing every minute
-@Scheduled(cron = "0 0 0 * * *",zone = "UTC")
+    //    @Scheduled(cron = "0 * * * * *") //for executing every minute
+    @Scheduled(cron = "0 0 0 * * *", zone = "UTC") //for executing every day at midnight
     public void executeAtMidnight() {
 
         long dateOfCreationOfNewReservations = 5L;

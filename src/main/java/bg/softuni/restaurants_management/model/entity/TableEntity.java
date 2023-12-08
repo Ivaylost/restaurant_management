@@ -17,9 +17,7 @@ public class TableEntity extends BaseEntity{
 
     @OneToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "table",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            mappedBy = "table"
     )
     private List<Reservation> reservations = new ArrayList<>();
 
