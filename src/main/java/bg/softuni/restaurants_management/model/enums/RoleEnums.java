@@ -3,5 +3,5 @@ package bg.softuni.restaurants_management.model.enums;
 public enum RoleEnums {
     ADMIN,
     MANAGER,
-    USER;
+    USER
 }
