@@ -42,7 +42,7 @@ public class ReservationServiceImpl implements ReservationService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         LocalDate localDate = LocalDate.parse(createAllReservationsDateBindingModel.getDatepicker(), formatter);
 
-        if (restaurant.isPresent() && checkForReservation(localDate).isEmpty()) {
+        if (restaurant.isPresent() && checkForReservation(localDate, restaurant.get().getId()).isEmpty()) {
             tables = restaurant.get().getTableEntities();
 
             List<ReservationEnums> values = Arrays.stream(ReservationEnums.values()).toList();
@@ -117,8 +117,8 @@ public class ReservationServiceImpl implements ReservationService {
                 .toList();
     }
 
-    private List<Reservation> checkForReservation(LocalDate date) {
-        return reservationRepository.findAllByDateIs(date).orElse(new ArrayList<>());
+    private List<Reservation> checkForReservation(LocalDate date, Long id) {
+        return reservationRepository.findAllByDateIsAndTableRestaurant_Id(date, id).orElse(new ArrayList<>());
     }
 
     private List<Reservation> createListOfReservations(List<Restaurant> allActiveRestaurants,

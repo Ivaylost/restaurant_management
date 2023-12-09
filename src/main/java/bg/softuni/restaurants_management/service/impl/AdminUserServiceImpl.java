@@ -1,6 +1,7 @@
 package bg.softuni.restaurants_management.service.impl;
 
 import bg.softuni.restaurants_management.error.ObjectNotFoundException;
+import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
 import bg.softuni.restaurants_management.model.dto.UserDto;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.Role;
@@ -70,7 +71,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public List<Restaurant> getUnassignedRestaurants(Long userId) {
+    public List<RestaurantViewDetails> getUnassignedRestaurants(Long userId) {
         Optional<UserEntity> user = userRepository.findById(userId);
 
         if (user.isEmpty()) {
@@ -79,9 +80,10 @@ public class AdminUserServiceImpl implements AdminUserService {
         List<Restaurant> allRestaurants = getAllRestaurants();
         List<Restaurant> restaurants = user.get().getRestaurants();
         return Stream.concat(
-                allRestaurants.stream().filter(e -> !restaurants.contains(e)),
-                restaurants.stream().filter(e -> !allRestaurants.contains(e))
-        ).toList();
+                        allRestaurants.stream().filter(e -> !restaurants.contains(e)),
+                        restaurants.stream().filter(e -> !allRestaurants.contains(e))
+                ).map(restaurant -> modelMapper.map(restaurant, RestaurantViewDetails.class))
+                .toList();
     }
 
     @Override

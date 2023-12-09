@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.service;
 
+import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
 import bg.softuni.restaurants_management.model.dto.UserDto;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.Role;
@@ -19,7 +20,7 @@ public interface AdminUserService {
 
     Long getUserByEmail(String email);
 
-    List<Restaurant> getUnassignedRestaurants(Long userId);
+    List<RestaurantViewDetails> getUnassignedRestaurants(Long userId);
 
     void assignRestaurant(Long userId, Long restaurantId);
 

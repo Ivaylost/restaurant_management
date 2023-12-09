@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.web;
 
+import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
 import bg.softuni.restaurants_management.model.dto.UserDto;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.Role;
@@ -33,7 +34,7 @@ public class AdminUsersManageController {
     public ModelAndView userDetails(@PathVariable("id") Long id) {
         UserDto user = adminUserService.getUserById(id);
         List<Role> unassignedRoles = adminUserService.getUnassignedRoles(id);
-        List<Restaurant> unassignedRestaurants = adminUserService.getUnassignedRestaurants(id);
+        List<RestaurantViewDetails> unassignedRestaurants = adminUserService.getUnassignedRestaurants(id);
         ModelAndView view = new ModelAndView("user-details");
         view.addObject("user", user);
         view.addObject("unassignedRoles", unassignedRoles);
