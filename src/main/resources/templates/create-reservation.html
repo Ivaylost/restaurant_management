@@ -37,11 +37,6 @@
 
     </form>
 </div>
-
-
-<div>
-    <footer></footer>
-</div>
 <script>
     $('#datepicker').datepicker({
         format: 'mm/dd/yyyy',
@@ -51,4 +46,7 @@
     $('#datepicker').datepicker('setDate', new Date());
 </script>
 </body>
+<div class="container">
+    <footer th:replace="~{fragments/footer}"></footer>
+</div>
 </html>

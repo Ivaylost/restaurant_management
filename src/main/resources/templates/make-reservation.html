@@ -34,7 +34,7 @@
                     <form th:method="post"
                           th:action="@{/makeReservation}">
                         <a>
-                            <input  type="hidden" name="reservationId" th:value="*{reservation.reservationId}"/>
+                            <input type="hidden" name="reservationId" th:value="*{reservation.reservationId}"/>
                             <button type="submit">Make reservation</button>
                         </a>
                     </form>
@@ -43,11 +43,6 @@
             </tbody>
         </table>
     </div>
-</div>
-
-
-<div>
-    <footer></footer>
 </div>
 <script>
     $('#datepicker').datepicker({
@@ -58,4 +53,7 @@
     $('#datepicker').datepicker('setDate', new Date());
 </script>
 </body>
+<div class="container">
+    <footer th:replace="~{fragments/footer}"></footer>
+</div>
 </html>
