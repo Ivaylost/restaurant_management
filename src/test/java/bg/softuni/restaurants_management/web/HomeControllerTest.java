@@ -103,17 +103,17 @@ class HomeControllerTest {
     }
 
     @Test
-    @WithMockUser(username = "admin@test.com", password = "password", roles = "USER")
+    @WithMockUser(username = "admin@test.com", password = "password", roles = "MANAGER")
     void testUserReservationPostRequest() throws Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
         String date = LocalDate.now().format(formatter);
 
         Reservation reservation = new Reservation().setReservations(ReservationEnums.RESERVATION_12H_13H)
                 .setDate(LocalDate.now());
-        Reservation savedReservation = reservationRepository.save(reservation);
+        //Reservation savedReservation = reservationRepository.save(reservation);
 
         TableEntity table = new TableEntity().setName("T1");
-        table.getReservations().add(savedReservation);
+        table.getReservations().add(reservation);
         TableEntity savedTable = tableRepository.save(table);
 
         Restaurant restaurant = new Restaurant()

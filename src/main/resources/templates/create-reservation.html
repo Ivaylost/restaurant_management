@@ -8,7 +8,7 @@
 </div>
 <div class="container">
 
-    <h2 class="text-center text-dark">Create reservation</h2>
+    <h2 class="text-center text-dark">Search for free reservations</h2>
     <form th:method="post"
           th:action="@{/userReservation/{restaurantId}(restaurantId=*{restaurantId})}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
@@ -30,7 +30,7 @@
         <div class="row">
             <div class="col col-md-4">
                 <div class="button-holder d-flex">
-                    <input type="submit" class="btn btn-dark btn-lg" value="Create"/>
+                    <input type="submit" class="btn btn-dark btn-lg" value="Search"/>
                 </div>
             </div>
         </div>

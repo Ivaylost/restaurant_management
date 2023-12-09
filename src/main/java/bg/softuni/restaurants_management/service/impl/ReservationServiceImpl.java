@@ -1,5 +1,6 @@
 package bg.softuni.restaurants_management.service.impl;
 
+import bg.softuni.restaurants_management.comparator.ReservationViewModelSorter;
 import bg.softuni.restaurants_management.error.ObjectNotFoundException;
 import bg.softuni.restaurants_management.model.dto.CreateAllReservationsDateBindingModel;
 import bg.softuni.restaurants_management.model.dto.ReservationViewModel;
@@ -18,10 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -69,9 +67,10 @@ public class ReservationServiceImpl implements ReservationService {
         LocalDate localDate = LocalDate.parse(datepicker, formatter);
         List<Reservation> allByDateIsAndTableRestaurantId =
                 reservationRepository.findAllByDateIsAndUser_IdAndTable_Restaurant_Id(localDate, userId, restaurantId);
-        return allByDateIsAndTableRestaurantId.stream()
+         return allByDateIsAndTableRestaurantId.stream()
                 .map(view -> modelMapper.map(view, ReservationViewModel.class))
-                .toList();
+                .sorted(new ReservationViewModelSorter().reversed())
+                 .toList();
     }
 
     @Override
