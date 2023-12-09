@@ -2,6 +2,7 @@ package bg.softuni.restaurants_management.service.impl;
 
 import bg.softuni.restaurants_management.Helpers;
 import bg.softuni.restaurants_management.model.dto.CreateAllReservationsDateBindingModel;
+import bg.softuni.restaurants_management.model.dto.ReservationViewModel;
 import bg.softuni.restaurants_management.model.entity.Reservation;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
 import bg.softuni.restaurants_management.model.entity.TableEntity;
@@ -142,5 +143,44 @@ class ReservationServiceImplTest {
 
             assertEquals(testUser.getId(), updatedReservation.getUser().getId());
             assertEquals(ReservationEnums.RESERVATION_12H_13H, updatedReservation.getReservations());
+    }
+
+    @Test
+    void testGetMyReservations(){
+        UserEntity userEntity = userRepository.save(
+                new UserEntity()
+                        .setFirstName("first")
+                        .setLastName("last")
+                        .setActive(false)
+                        .setEmail("test@test.com")
+                        .setPassword("password")
+        );
+        List<ReservationViewModel> myReservations = reservationService.getMyReservations(userEntity);
+       assertInstanceOf(List.class, myReservations);
+       assertEquals(0, myReservations.size());
+
+        Restaurant restaurant = restaurantRepository.save(
+                new Restaurant().setName("restaurant")
+                        .setLon(100D)
+                        .setLat(200D)
+        );
+
+        TableEntity table = tableRepository.save(
+                new TableEntity().setName("Table")
+                        .setRestaurant(restaurant)
+        );
+
+
+
+        Reservation savedReservation = reservationRepository.save(
+                new Reservation()
+                        .setDate(LocalDate.now())
+                        .setReservations(ReservationEnums.RESERVATION_13H_14H)
+                        .setUser(userEntity)
+                        .setTable(table)
+       );
+        List<ReservationViewModel> updatedReservation = reservationService.getMyReservations(userEntity);
+        assertEquals(1, updatedReservation.size());
+        assertEquals(userEntity.getId(), updatedReservation.get(0).getUserId());
     }
 }

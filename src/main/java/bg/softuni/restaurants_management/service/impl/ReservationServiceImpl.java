@@ -113,6 +113,7 @@ public class ReservationServiceImpl implements ReservationService {
         List<Reservation> allByUser = reservationRepository.findAllByUser(loggedUser);
         return reservationRepository.findAllByUser(loggedUser).stream()
                 .map(view -> modelMapper.map(view, ReservationViewModel.class))
+                .sorted(new ReservationViewModelSorter().reversed())
                 .toList();
     }
 
