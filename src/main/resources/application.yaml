@@ -14,9 +14,6 @@ spring:
         format_sql: true
     hibernate:
       ddl-auto: update
-  sql:
-    init:
-      mode: never
   mvc:
     hiddenmethod:
       filter:
@@ -24,7 +21,6 @@ spring:
 
 restaurants_management:
   default.admin.pass: ${DEFAULT_ADMIN_PASS:password}
-  remember.me.key: ${REMEMBER_ME_KEY:RememberMeDefaultKey}
 
 
 logging:
@@ -33,11 +29,3 @@ logging:
     org.hibernate.orm.jdbc.bind: TRACE
 
 
-management:
-  server:
-    port: 8081
-  endpoints:
-    web:
-      base-path: /actuator
-      exposure:
-        include: "*"

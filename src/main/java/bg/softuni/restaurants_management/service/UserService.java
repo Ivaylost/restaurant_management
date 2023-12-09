@@ -5,7 +5,6 @@ import bg.softuni.restaurants_management.model.dto.UserRegistrationBindingModel;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService {
     UserEntity findUserByEmail(String email);

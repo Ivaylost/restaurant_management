@@ -1,11 +1,9 @@
 package bg.softuni.restaurants_management.model.dto;
 
 import bg.softuni.restaurants_management.model.entity.TableEntity;
-import org.modelmapper.ModelMapper;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 public class RestaurantViewDetails {
     private Long id;

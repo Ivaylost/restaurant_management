@@ -1,9 +1,5 @@
 package bg.softuni.restaurants_management.model.dto;
 
-import bg.softuni.restaurants_management.model.entity.Restaurant;
-import jakarta.persistence.Column;
-import jakarta.persistence.ManyToOne;
-
 public class TableViewDetails {
     private Long id;
     private String name;

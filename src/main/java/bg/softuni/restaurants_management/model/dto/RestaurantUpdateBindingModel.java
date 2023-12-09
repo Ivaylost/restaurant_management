@@ -1,6 +1,5 @@
 package bg.softuni.restaurants_management.model.dto;
 
-import bg.softuni.restaurants_management.validators.UniqueRestaurantName;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 

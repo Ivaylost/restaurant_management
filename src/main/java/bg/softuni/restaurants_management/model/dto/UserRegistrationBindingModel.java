@@ -4,7 +4,6 @@ import bg.softuni.restaurants_management.validators.FieldMatch;
 import bg.softuni.restaurants_management.validators.UniqueUserEmail;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 @FieldMatch(
         first = "password",
@@ -16,7 +15,7 @@ public class UserRegistrationBindingModel {
     private String firstName;
     @NotEmpty
     private String lastName;
-    @NotNull
+    @NotEmpty
     @Email
     @UniqueUserEmail
     private String email;

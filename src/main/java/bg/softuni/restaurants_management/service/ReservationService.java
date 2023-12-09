@@ -2,7 +2,6 @@ package bg.softuni.restaurants_management.service;
 
 import bg.softuni.restaurants_management.model.dto.CreateAllReservationsDateBindingModel;
 import bg.softuni.restaurants_management.model.dto.ReservationViewModel;
-import bg.softuni.restaurants_management.model.entity.Reservation;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
 
 import java.time.LocalDate;

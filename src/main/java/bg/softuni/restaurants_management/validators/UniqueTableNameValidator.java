@@ -17,10 +17,4 @@ public class UniqueTableNameValidator implements ConstraintValidator<UniqueTable
         return false;
     }
 
-//    @Override
-//    public boolean isValid(String value, ConstraintValidatorContext context) {
-//        return userRepository
-//                .findByEmail(value)
-//                .isEmpty();
-//    }
 }

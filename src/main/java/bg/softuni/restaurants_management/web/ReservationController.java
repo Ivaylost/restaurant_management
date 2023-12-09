@@ -2,11 +2,9 @@ package bg.softuni.restaurants_management.web;
 
 import bg.softuni.restaurants_management.model.dto.CreateAllReservationsDateBindingModel;
 import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
-import bg.softuni.restaurants_management.model.dto.TableCreateBindingModel;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
 import bg.softuni.restaurants_management.service.ReservationService;
 import bg.softuni.restaurants_management.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -18,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequestMapping("/reservation")
 @Controller

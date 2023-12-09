@@ -1,9 +1,5 @@
 package bg.softuni.restaurants_management.model.dto;
 
-import bg.softuni.restaurants_management.model.entity.Reservation;
-import bg.softuni.restaurants_management.model.entity.TableEntity;
-import jakarta.persistence.Table;
-
 public class ReservationViewModel {
     private Long reservationId;
     private String tableName;

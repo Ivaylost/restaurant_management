@@ -2,8 +2,6 @@ package bg.softuni.restaurants_management.model.entity;
 
 import jakarta.persistence.*;
 
-import bg.softuni.restaurants_management.model.entity.Restaurant;
-
 import java.util.ArrayList;
 import java.util.List;
 

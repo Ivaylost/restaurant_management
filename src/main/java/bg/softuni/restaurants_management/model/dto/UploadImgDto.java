@@ -1,7 +1,5 @@
 package bg.softuni.restaurants_management.model.dto;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class UploadImgDto {
     private String path;
     private String fileName;

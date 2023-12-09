@@ -1,11 +1,12 @@
 package bg.softuni.restaurants_management.config;
 
-import bg.softuni.restaurants_management.model.dto.*;
+import bg.softuni.restaurants_management.model.dto.ReservationViewModel;
+import bg.softuni.restaurants_management.model.dto.RestaurantViewDetails;
+import bg.softuni.restaurants_management.model.dto.UserDto;
+import bg.softuni.restaurants_management.model.dto.UserRegistrationBindingModel;
 import bg.softuni.restaurants_management.model.entity.Reservation;
 import bg.softuni.restaurants_management.model.entity.Restaurant;
-import bg.softuni.restaurants_management.model.entity.TableEntity;
 import bg.softuni.restaurants_management.model.entity.UserEntity;
-import bg.softuni.restaurants_management.model.enums.RoleEnums;
 import bg.softuni.restaurants_management.repository.RoleRepository;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
@@ -13,8 +14,6 @@ import org.modelmapper.Provider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.List;
 
 @Configuration
 public class ModelMapperConfig {
