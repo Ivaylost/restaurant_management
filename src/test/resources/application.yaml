@@ -3,9 +3,6 @@ spring:
     hibernate:
       ddl-auto: create-drop
     defer-datasource-initialization: true
-  sql:
-    init:
-      mode: never
   mvc:
     hiddenmethod:
       filter:
@@ -13,7 +10,9 @@ spring:
 
 restaurants_management:
   default.admin.pass: ${DEFAULT_ADMIN_PASS:password}
-  remember.me.key: ${REMEMBER_ME_KEY:RememberMeDefaultKey}
+  default.admin.email: ${DEFAULT_ADMIN_EMAIL:admin@example.com}
+  default.admin.firstName: ${DEFAULT_ADMIN_FIRST_NAME:Admin}
+  default.admin.lastName: ${DEFAULT_ADMIN_LAST_NAME:Admin}
 
 
 logging:

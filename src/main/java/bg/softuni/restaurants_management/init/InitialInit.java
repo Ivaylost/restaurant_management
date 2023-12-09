@@ -33,6 +33,9 @@ public class InitialInit implements CommandLineRunner {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final String defaultAdminPass;
+    private final String defaultAdminEmail;
+    private final String defaultAdminFirstName;
+    private final String defaultAdminLastName;
     private final ReservationSlotRepository reservationSlotRepository;
     private final RestaurantRepository restaurantRepository;
     private final ImageService imageService;
@@ -41,7 +44,11 @@ public class InitialInit implements CommandLineRunner {
     private final ReservationService reservationService;
 
 
-    public InitialInit(RestaurantService restaurantService, @Value("${restaurants_management.default.admin.pass}") String defaultAdminPass,
+    public InitialInit(@Value("${restaurants_management.default.admin.pass}") String defaultAdminPass,
+                       @Value("${restaurants_management.default.admin.email}") String defaultAdminEmail,
+                       @Value("${restaurants_management.default.admin.firstName}") String defaultAdminFirstName,
+                       @Value("${restaurants_management.default.admin.lastName}") String defaultAdminLastName,
+                       RestaurantService restaurantService,
                        RoleRepository roleRepository,
                        UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
@@ -57,12 +64,15 @@ public class InitialInit implements CommandLineRunner {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.defaultAdminPass = defaultAdminPass;
+        this.defaultAdminEmail = defaultAdminEmail;
         this.reservationSlotRepository = reservationSlotRepository;
         this.restaurantRepository = restaurantRepository;
         this.imageService = imageService;
         this.resourceLoader = resourceLoader;
         this.tableRepository = tableRepository;
         this.reservationService = reservationService;
+        this.defaultAdminFirstName = defaultAdminFirstName;
+        this.defaultAdminLastName = defaultAdminLastName;
     }
 
     @Override
@@ -93,12 +103,12 @@ public class InitialInit implements CommandLineRunner {
             roleRepository.saveAll(roles);
         }
 
-        if (userRepository.findByEmail("admin@example.com").isEmpty()) {
+        if (userRepository.findByEmail(defaultAdminEmail).isEmpty()) {
             List<Role> adminRoles = List.of(roleRepository.findByRole(RoleEnums.ADMIN));
             UserEntity admin = new UserEntity();
-            admin.setEmail("admin@example.com");
-            admin.setFirstName("Admin");
-            admin.setLastName("Admin");
+            admin.setEmail(defaultAdminEmail);
+            admin.setFirstName(defaultAdminFirstName);
+            admin.setLastName(defaultAdminLastName);
             admin.setPassword(passwordEncoder.encode(defaultAdminPass));
             admin.setRoles(adminRoles);
             userRepository.saveAndFlush(admin);
