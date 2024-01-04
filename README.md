@@ -1,28 +1,16 @@
-# Темата на проекта е Restaurant management system.
+The project's theme is a Restaurant Management System.
+Upon initial startup, a user with the email - admin@example.com and password - password is created in the database, along with a restaurant with one table and reservations for it for the current day.
+1. Registration of new users – after registering a user, a verification link appears on the console through the Event publisher. Once it is clicked and launched in the browser, the user is assigned the User role, allowing them to make reservations.
+2. After registering a new user, a user with the ADMIN role will be able to manage the roles (ADMIN, MANAGER, USER) of all other users.
+3. A user with the MANAGER role can be assigned to a restaurant.
+4. A user with the ADMIN role can also create and edit a restaurant.
+5. When creating a restaurant, latitude and longitude coordinates must also be provided. These coordinates allow MapBox to visualize the location of the restaurant.
+6. Once a user is assigned the MANAGER role and a restaurant is assigned to them, they can create and delete current tables, as well as make reservations for a specific date for all tables.
+7. At 24:00 CET, thanks to ScheduleConfig, new reservation objects are created for all active restaurants for a date 5 days after the current one.
+8. The system also includes an Interceptor, which, upon calling the url …/userReservation/**, calculates the processing time of the request.
+9. The functionality "Fetch to asynchronously load and display data" is integrated into the restaurant_details.html template. Through the CoordinatesRestController, coordinates of the respective restaurant are obtained and passed to JavaScript for visualizing the restaurant's location.
+10. All objects in the project are mapped using Model Mapper.
 
-# При първоначално стартиране в базата данни се създава потребител с email - admin@example.com и парола - password, както и ресторант
-# с една маса и резервации за нея за текущият ден.
 
-# 1.	Регистрация на нови потребители – след регистриране на потребител, чрез Event publisher, на конзолата се появява верификационен линк.
-#     След като се постави и стартира в браузера, на потребителят се назначава роля User, благодарение на това той ще може да прави резервации.
 
-# 2.	След регистрация на нов потребител, потребител с роля ADMIN, ще може да управлява ролите(ADMIN, MANAGER, USER) на всички останали потребители.
 
-# 3.	На потребител с роля MANAGER, ще може да се възложи ресторант.
-
-# 4.	Потребител с роля ADMIN, може също така да създава и редактира ресторант.
-
-# 5.	При създаването на ресторант, също така ще трябва да се сложат координати Lat и Lon,
-#     благодарение на които, MapBox ще визуализира локацията на ресторанта.
-
-# 6.	След като на потребител се назначи роля MANAGER и му се възложи ресторант, той ще може да създава
-#     и трие текущи маси, както и да създава резервации за определена дата за всички маси.
-
-# 7.	В 24.00 CET благодарение на ScheduleConfig се създават нови обекти за резервация за всички активни ресторанти за дата 5 дни след текущата.
-
-# 8.	В системата е интегриран и Interceptor, който след извикване на url …/userReservation/** пресмята времето за обработка на заявката.
-
-# 9.	Функционалността Fetch to asynchronously load and display data е интегрирана в темплейта restaurant_details.html където посредством
-#     CoordinatesRestController се взимат координатите на съответният ресторант и се предават на Java script-a визуализиращ локацията на ресторанта.
-
-# 10.	Всички обекти в проекта се мапват чрез Model mapper.
